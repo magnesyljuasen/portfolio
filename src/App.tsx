@@ -95,7 +95,7 @@ export default function App() {
           <article className="intro-panel">
             <div className="intro-copy">
               <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
-              <p className="intro-lead">Med data, kode og et ganske stort behov for struktur.</p>
+              <p className="intro-lead">Med nysgjerrighet, kode og et ganske stort behov for struktur.</p>
               <p className="intro-note">helst ting som faktisk blir brukt</p>
             </div>
           </article>
@@ -127,26 +127,31 @@ export default function App() {
       </div>
 
       <section className="about-screen" aria-labelledby="about-title">
-        <div className="about-heading">
-          <span className="scribble">kort fortalt</span>
-          <h2 id="about-title">Sivilingeniør med geofag i bunn, som stadig går dypere i <span>kode.</span></h2>
-        </div>
-        <div className="about-copy">
-          <p>Jeg er 29 år, utdannet innen geofag og jobber i Asplan Viak. Akkurat nå er det først og fremst energi og bergvarme som er faget mitt.</p>
-          <p>Jeg liker å kombinere fagkunnskap med data og kode. Jeg har brukt Python i mange år og bruker nå KI aktivt i utviklingen.</p>
-          <p>Jeg er ikke supernerd på én enkelt ting. Jeg er opptatt av helheten og av å få fag, data, kode og KI til å spille sammen. Litt som en midtbanespiller på fotballbanen.</p>
-          <span className="about-note">fag + data + kode + KI</span>
+        <figure className="about-photo">
+          <img src={`${import.meta.env.BASE_URL}about/magne-syljuasen.png`} alt="Magne Syljuåsen arbeider ved en laptop" />
+        </figure>
+        <div className="about-content">
+          <div className="about-heading">
+            <span className="scribble">kort fortalt</span>
+            <h2 id="about-title">Sivilingeniør med geofag i bunn og stadig mer <span>kode i verktøykassa.</span></h2>
+          </div>
+          <div className="about-copy">
+            <p>Jeg er 29 år og utdannet innen geofag fra NTNU. I dag jobber jeg i Asplan Viak, først og fremst med energi og bergvarme.</p>
+            <p>Jeg liker å kombinere fag, data og kode. Jeg har brukt Python i mange år og bruker nå KI aktivt i utviklingen.</p>
+            <p>Jeg er ikke supernerd på én enkelt ting. Jeg er opptatt av helheten og av å få fag, data, kode og KI til å spille sammen. Kanskje er det ikke tilfeldig at jeg alltid har vært midtbanespiller på fotballbanen.</p>
+            <span className="about-note">fag + data + kode + KI</span>
+          </div>
         </div>
       </section>
 
       <footer className="site-footer">
         <div className="footer-note">
           <span className="scribble">en liten fotnote</span>
-          <p>Jeg liker problemer med litt motstand, særlig når data og kode kan gjøre dem enklere.</p>
+          <p>Jeg motiveres av problemer med litt motstand, der man må tenke nytt og kreativt.</p>
         </div>
         <div className="footer-cta">
-          <h2>Har du et problem<br />som burde vært <span>enklere?</span></h2>
-          <a href={linkedinUrl} target="_blank" rel="noreferrer">Fortell meg om det <ArrowUpRight size={18} /></a>
+          <h2>La oss finne essensen<br />og gjøre det <span>enklere.</span></h2>
+          <a href={linkedinUrl} target="_blank" rel="noreferrer">Skal vi ta en prat? <ArrowUpRight size={19} /></a>
         </div>
         <div className="footer-meta"><span>© 2026 Magne Syljuåsen</span></div>
       </footer>
