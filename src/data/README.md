@@ -4,6 +4,7 @@ Prosjektene ligger i `projects.json`. Kopier et eksisterende objekt, gi prosjekt
 
 - Bruk `"kind": "digital"` for den digitale øya.
 - Bruk `"kind": "geographic"` og `"coordinates": [lengdegrad, breddegrad]` for Norge.
+- Bruk `"group": "fag"`, `"verktoy"` eller `"lek"` for prikkfargen på kartet.
 - Legg eventuelle PNG- eller WebP-bilder i `public/projects/`.
 - Legg deretter til for eksempel `"image": "projects/mitt-prosjekt.png"` i prosjektet.
 

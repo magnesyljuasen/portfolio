@@ -26,4 +26,4 @@ Vite bruker relative asset-stier, så løsningen fungerer både på et bruker-re
 
 - Bytt ut `hei@eksempel.no` med riktig e-postadresse.
 - Legg inn riktige GitHub- og LinkedIn-lenker i `src/App.tsx`.
-- Oppdater prosjekttekster, status og lenker i `src/data.ts`.
+- Oppdater prosjekter i `src/data/projects.json`.

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { ArrowDownToLine, ArrowUpRight, Github, LayoutList, Linkedin, Map, X } from 'lucide-react'
-import { projects, type Project } from './data'
+import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, X } from 'lucide-react'
+import { projectGroups, projects, type Project } from './data'
 
 const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 
@@ -49,7 +49,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [pageReady, setPageReady] = useState(false)
   const [mapReady, setMapReady] = useState(false)
-  const [view, setView] = useState<'map' | 'list'>('map')
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const loaderStartedAt = useRef(performance.now())
@@ -77,10 +76,7 @@ export default function App() {
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
           <div className="top-actions">
-            <div className="view-switch" role="group" aria-label="Velg prosjektvisning">
-              <button className={view === 'map' ? 'is-active' : ''} onClick={() => setView('map')} aria-label="Kartvisning" title="Kartvisning" aria-pressed={view === 'map'}><Map size={14} /></button>
-              <button className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-label="Listevisning" title="Listevisning" aria-pressed={view === 'list'}><LayoutList size={14} /></button>
-            </div>
+            <a className="about-link" href="#about">Om meg</a>
             <nav className="external-links" aria-label="Eksterne lenker">
               <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
               <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
@@ -96,35 +92,29 @@ export default function App() {
               <p className="intro-lead">Med nysgjerrighet, kode og et ganske stort behov for struktur.</p>
               <p className="intro-note">helst ting som faktisk blir brukt</p>
             </div>
+            <span className="scroll-cue" aria-hidden="true">mer nedenfor <ArrowDown size={13} /></span>
           </article>
 
-          <section className="project-explorer" aria-label="Prosjektutforsker">
+          <section className="project-explorer" id="projects" aria-label="Prosjektutforsker">
             <header className="explorer-header">
-              {view === 'map' && <span className="map-hint"><span className="hint-desktop">hold over en prikk for å se prosjekt</span><span className="hint-touch">trykk på en prikk for å se prosjekt</span></span>}
+              <span className="map-hint"><span className="hint-desktop">hold over en prikk for å se prosjekt</span><span className="hint-touch">trykk på en prikk</span></span>
+              <div className="map-legend" aria-label="Prikkfarger">
+                {Object.entries(projectGroups).map(([key, group]) => (
+                  <span key={key}><i style={{ backgroundColor: group.color }} />{group.label}</span>
+                ))}
+              </div>
             </header>
 
             <div className="explorer-body">
-              {view === 'map' ? (
-                <Suspense fallback={<div className="map-loading"><span>tegner kartet...</span></div>}>
-                  <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} onReady={() => setMapReady(true)} />
-                </Suspense>
-              ) : (
-                <div className="project-list" role="list">
-                  {projects.map((project) => (
-                    <button key={project.id} className="list-row" onMouseEnter={() => setActiveId(project.id)} onFocus={() => setActiveId(project.id)} onClick={() => setSelectedProject(project)} role="listitem">
-                      <span className="list-main"><strong>{project.title}</strong><small>{project.description}</small></span>
-                      <span className="list-year">{project.year}</span>
-                      <ArrowUpRight size={17} />
-                    </button>
-                  ))}
-                </div>
-              )}
+              <Suspense fallback={<div className="map-loading"><span>tegner kartet...</span></div>}>
+                <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} onReady={() => setMapReady(true)} />
+              </Suspense>
             </div>
           </section>
         </section>
       </div>
 
-      <section className="about-screen" aria-labelledby="about-title">
+      <section className="about-screen" id="about" aria-labelledby="about-title">
         <figure className="about-photo">
           <img src={`${import.meta.env.BASE_URL}about/magne-syljuasen.png`} alt="Magne Syljuåsen arbeider ved en laptop" />
         </figure>
@@ -148,8 +138,7 @@ export default function App() {
           <p>Jeg motiveres av problemer med litt motstand, der man må tenke nytt og kreativt.</p>
         </div>
         <div className="footer-cta">
-          <h2>La oss finne essensen<br />og gjøre det <span>enklere.</span></h2>
-          <a href={linkedinUrl} target="_blank" rel="noreferrer">Skal vi ta en prat? <ArrowUpRight size={19} /></a>
+          <a href={linkedinUrl} target="_blank" rel="noreferrer"><h2>Skal vi ta en <span>prat?</span></h2><ArrowUpRight size={30} /></a>
         </div>
         <div className="footer-meta"><span>© 2026 Magne Syljuåsen</span></div>
       </footer>

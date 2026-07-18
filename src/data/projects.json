@@ -7,7 +7,7 @@
     "longDescription": "Et visuelt beslutningsverktøy som samler bygningsdata, energibehov og lokale forutsetninger i ett tydelig arbeidsrom.",
     "year": "2024",
     "tags": ["Python", "GeoData", "Energi"],
-    "color": "#355744",
+    "group": "fag",
     "kind": "digital",
     "metric": "10k+ bygg",
     "status": "I bruk"
@@ -20,7 +20,7 @@
     "longDescription": "En prototype for å utforske hvordan ulike energi- og klimatiltak påvirker forbruk, kostnader og utslipp på områdenivå.",
     "year": "2024",
     "tags": ["UX", "Data", "Klima"],
-    "color": "#b85c3d",
+    "group": "fag",
     "kind": "geographic",
     "coordinates": [10.75, 59.91],
     "metric": "6 scenarier",
@@ -34,7 +34,7 @@
     "longDescription": "En nettbasert plantegner med sanntidsvisning, materialbibliotek og et enkelt grensesnitt for å forme rom uten CAD-erfaring.",
     "year": "2026",
     "tags": ["React", "Three.js", "Design"],
-    "color": "#d5a642",
+    "group": "verktoy",
     "kind": "digital",
     "metric": "2D → 3D",
     "status": "Pågår"
@@ -47,7 +47,7 @@
     "longDescription": "Et Python-bibliotek for analyser av energibehov, varmepumper, solceller, geoenergi og økonomi. Det er laget for gjenbruk.",
     "year": "2023–26",
     "tags": ["Python", "API", "Modellering"],
-    "color": "#597b7b",
+    "group": "fag",
     "kind": "digital",
     "metric": "15+ moduler",
     "status": "Aktivt"
@@ -60,7 +60,7 @@
     "longDescription": "En leken webopplevelse bygget for raske runder, tydelig feedback og den klassiske følelsen av ‘bare én gang til’.",
     "year": "2026",
     "tags": ["Game", "React", "Canvas"],
-    "color": "#7c6b51",
+    "group": "lek",
     "kind": "digital",
     "metric": "60 fps",
     "status": "Eksperiment"

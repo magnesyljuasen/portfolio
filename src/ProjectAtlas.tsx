@@ -5,7 +5,7 @@ import world from 'world-atlas/countries-50m.json'
 import * as THREE from 'three'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Group, OrthographicCamera } from 'three'
-import type { Project } from './data'
+import { projectGroups, type Project } from './data'
 
 type Props = {
   projects: Project[]
@@ -118,7 +118,7 @@ function Marker({ project, digitalIndex, active, onActive, onOpen }: { project: 
         onClick={(event) => { event.stopPropagation(); onOpen() }}
       >
         <sphereGeometry args={[active ? .16 : .12, 20, 20]} />
-        <meshBasicMaterial color={project.color} />
+        <meshBasicMaterial color={projectGroups[project.group].color} />
       </mesh>
       <mesh position={[0, 0, -.02]}>
         <ringGeometry args={[active ? .23 : .19, active ? .25 : .205, 32]} />
