@@ -10,7 +10,10 @@ const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
-      <span className="loader-mark">MS</span>
+      <div className="loader-copy">
+        <strong>Hei og velkommen<br />til porteføljesiden min</strong>
+        <span>– Magne Syljuåsen</span>
+      </div>
       <span className="loader-line" />
     </div>
   )
@@ -62,7 +65,7 @@ export default function App() {
 
   useEffect(() => {
     if (!pageReady || !mapReady) return
-    const minimumDuration = 1400
+    const minimumDuration = 2600
     const remaining = Math.max(0, minimumDuration - (performance.now() - loaderStartedAt.current))
     const timer = window.setTimeout(() => setIsLoading(false), remaining)
     return () => window.clearTimeout(timer)

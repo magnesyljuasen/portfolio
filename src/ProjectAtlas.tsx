@@ -16,8 +16,8 @@ type Props = {
 }
 
 const digitalPositions: [number, number][] = [
-  [-4.85, 1.2], [-5.35, .2], [-4.05, .35], [-4.65, -1.05],
-  [-5.5, -1.15], [-3.75, -.8], [-5.65, .9], [-3.75, 1.15],
+  [2.35, -1.2], [3.1, -1.45], [2.2, -2.15], [3.15, -2.35],
+  [2.7, -.85], [3.55, -1.9], [1.85, -1.65], [2.65, -2.65],
 ]
 
 function projectPoint(project: Project, digitalIndex: number): [number, number] {
@@ -83,12 +83,11 @@ function NorwayGeometry() {
 function DigitalIsland() {
   const shape = useMemo(() => {
     const island = new THREE.Shape()
-    island.moveTo(-5.55, 1.8)
-    island.bezierCurveTo(-5.0, 2.35, -3.75, 2.2, -3.35, 1.4)
-    island.bezierCurveTo(-2.95, .45, -3.15, -.85, -3.8, -1.55)
-    island.bezierCurveTo(-4.35, -2.2, -5.45, -2.45, -5.95, -1.65)
-    island.bezierCurveTo(-6.45, -.8, -6.25, .05, -5.95, .65)
-    island.bezierCurveTo(-5.75, 1.05, -5.95, 1.45, -5.55, 1.8)
+    island.moveTo(2.05, -.7)
+    island.bezierCurveTo(2.55, -.95, 3.35, -.75, 3.7, -1.2)
+    island.bezierCurveTo(4.0, -1.65, 3.75, -2.45, 3.3, -2.8)
+    island.bezierCurveTo(2.8, -3.1, 1.95, -2.9, 1.65, -2.35)
+    island.bezierCurveTo(1.35, -1.8, 1.5, -1.05, 2.05, -.7)
     return island
   }, [])
 
@@ -102,7 +101,7 @@ function DigitalIsland() {
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
         <lineBasicMaterial color="#a4563f" transparent opacity={.8} />
       </lineSegments>
-      <Html position={[-4.65, -.1, .46]} center distanceFactor={13} className="island-label">
+      <Html position={[2.7, -.48, .46]} center className="island-label">
         <span>digitalt</span>
       </Html>
     </group>
@@ -141,7 +140,7 @@ function MapScene({ projects, active, onActive, onOpen }: Props) {
     <>
       <ambientLight intensity={2.1} />
       <directionalLight position={[-5, 8, 12]} intensity={2.7} castShadow />
-      <group ref={group} position={[.15, 0, 0]}>
+      <group ref={group} position={[-.6, 0, 0]}>
         <NorwayGeometry />
         <DigitalIsland />
         {projects.map((project) => (
@@ -166,7 +165,7 @@ export default function ProjectAtlas(props: Props) {
   const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1280
   const isCompact = viewportWidth <= 960
   const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
-  const mapZoom = isCompact ? Math.min(64, viewportWidth / 13) : Math.min(58, desktopMapWidth / 13)
+  const mapZoom = isCompact ? Math.min(64, viewportWidth / 10.5) : Math.min(58, desktopMapWidth / 10.5)
   const activeProject = props.projects.find((project) => project.id === props.active) ?? props.projects[0]
   return (
     <div className="three-atlas">
