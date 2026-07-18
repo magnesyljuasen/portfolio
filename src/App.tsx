@@ -88,8 +88,9 @@ export default function App() {
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
             <div className="intro-copy">
-              <h1>Jeg brenner for <strong>smartere måter å jobbe på.</strong></h1>
-              <p className="intro-lead">Datadrevne beslutninger, koding, automatisering, effektivisering og struktur.</p>
+              <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
+              <p className="intro-lead">Med data, kode og et ganske stort behov for struktur.</p>
+              <p className="intro-note">helst ting som faktisk blir brukt</p>
             </div>
           </article>
 
@@ -125,12 +126,12 @@ export default function App() {
 
       <footer className="site-footer">
         <div className="footer-note">
-          <span className="scribble">helt nederst!</span>
-          <p>Har du en idé, et vanskelig problem<br />eller bare lyst til å slå av en prat?</p>
+          <span className="scribble">en liten fotnote</span>
+          <p>Jeg liker problemer med litt motstand — særlig når data og kode kan gjøre dem enklere.</p>
         </div>
         <div className="footer-cta">
-          <h2>La oss lage noe<br /><span>nyttig sammen.</span></h2>
-          <a href={linkedinUrl} target="_blank" rel="noreferrer">Ta kontakt på LinkedIn <ArrowUpRight size={18} /></a>
+          <h2>Har du et problem<br />som burde vært <span>enklere?</span></h2>
+          <a href={linkedinUrl} target="_blank" rel="noreferrer">Fortell meg om det <ArrowUpRight size={18} /></a>
         </div>
         <div className="footer-meta"><span>© 2026 Magne Syljuåsen</span></div>
       </footer>
