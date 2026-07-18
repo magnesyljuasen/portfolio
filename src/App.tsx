@@ -12,8 +12,8 @@ function SiteLoader() {
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
       <div className="loader-copy">
         <strong>Velkommen!</strong>
-        <p>Et øyeblikk — jeg gjør kartet klart.</p>
-        <span>– Magne Syljuåsen</span>
+        <p>Et øyeblikk, jeg gjør kartet klart.</p>
+        <span>Magne Syljuåsen</span>
       </div>
       <span className="loader-line" />
     </div>
@@ -129,13 +129,13 @@ export default function App() {
       <section className="about-screen" aria-labelledby="about-title">
         <div className="about-heading">
           <span className="scribble">kort fortalt</span>
-          <h2 id="about-title">Sivilingeniør som havnet stadig dypere i <span>kode.</span></h2>
+          <h2 id="about-title">Sivilingeniør med geofag i bunn, som stadig går dypere i <span>kode.</span></h2>
         </div>
         <div className="about-copy">
-          <p>Jeg er 29 år og jobber i Asplan Viak med data og energirådgivning. Det er derfor mange av prosjektene mine har et tydelig energipreg.</p>
-          <p>Jeg har kodet mye i Python i flere år, og bruker nå KI aktivt som en del av utviklingsarbeidet.</p>
-          <p>I praksis jobber jeg i krysningspunktet mellom energi, data og utvikling — en slags hybrid KI-utvikler.</p>
-          <span className="about-note">energi + data + kode + KI</span>
+          <p>Jeg er 29 år, utdannet innen geofag og jobber i Asplan Viak. Akkurat nå er det først og fremst energi og bergvarme som er faget mitt.</p>
+          <p>Jeg liker å kombinere fagkunnskap med data og kode. Jeg har brukt Python i mange år og bruker nå KI aktivt i utviklingen.</p>
+          <p>Jeg er ikke supernerd på én enkelt ting. Jeg er opptatt av helheten og av å få fag, data, kode og KI til å spille sammen. Litt som en midtbanespiller på fotballbanen.</p>
+          <span className="about-note">fag + data + kode + KI</span>
         </div>
       </section>
 

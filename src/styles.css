@@ -87,25 +87,25 @@ button { cursor: pointer; }
 .footer-meta { grid-column: 1/-1; display: flex; justify-content: flex-end; padding-top: 20px; color: #919b92; font-size: 7px; letter-spacing: .09em; text-transform: uppercase; }
 
 .detail-backdrop { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(37,48,40,.72); backdrop-filter: blur(7px); animation: fade-in .18s ease-out; }
-.detail-panel { width: min(620px,94vw); max-height: 88vh; display: grid; grid-template-rows: 56px auto; background: #f4f0e7; box-shadow: 0 28px 90px rgba(17,23,18,.24); }
+.detail-panel { width: min(580px,94vw); max-height: 88vh; display: grid; grid-template-rows: 44px auto; overflow: hidden; border-radius: 18px; background: #f4f0e7; box-shadow: 0 28px 90px rgba(17,23,18,.24); }
 .detail-open .three-atlas { visibility: hidden; }
 .detail-header { grid-column: 1/-1; display: flex; align-items: center; justify-content: space-between; padding: 0 18px 0 24px; color: #747971; font-family:'IBM Plex Mono',monospace; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }.detail-header button { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 0; background: transparent; }
-.detail-copy { padding: clamp(35px,5vw,65px); overflow: auto; }.detail-copy h2 { margin: 13px 0 24px; font-size: clamp(36px,4vw,54px); font-weight: 500; line-height: 1; letter-spacing: -.045em; }.detail-copy>p:not(.kicker){margin:0;color:#61675f;font-size:10px;line-height:1.8}.detail-tags{display:flex;flex-wrap:wrap;gap:7px 15px}.detail-tags span{padding:0;border:0;border-radius:0;color:#6d756e;font-family:'IBM Plex Mono',monospace;font-size:7px}.detail-tags span::before{content:'#';color:#9b4d38}@keyframes fade-in{from{opacity:0}}
-.detail-image { width: 100%; max-height: 280px; margin-bottom: 32px; display: block; object-fit: cover; background: #e4ded2; }
-.detail-meta { margin-top: 28px !important; color: #263129 !important; font-family:'IBM Plex Mono',monospace; font-size: 8px !important; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
-.detail-tags { margin-top: 20px; }
+.detail-copy { padding: clamp(28px,4vw,44px); overflow: auto; }.detail-copy h2 { margin: 10px 0 18px; font-size: clamp(32px,3.4vw,44px); font-weight: 500; line-height: 1.04; letter-spacing: -.04em; }.detail-copy>p:not(.kicker){margin:0;color:#566058;font-size:13px;line-height:1.65}.detail-tags{display:flex;flex-wrap:wrap;gap:7px 15px}.detail-tags span{padding:0;border:0;border-radius:0;color:#6d756e;font-family:'IBM Plex Mono',monospace;font-size:7px}.detail-tags span::before{content:'#';color:#9b4d38}@keyframes fade-in{from{opacity:0}}
+.detail-image { width: 100%; max-height: 250px; margin-bottom: 24px; display: block; object-fit: cover; background: #e4ded2; }
+.detail-meta { margin-top: 20px !important; color: #263129 !important; font-family:'IBM Plex Mono',monospace; font-size: 8px !important; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+.detail-tags { margin-top: 15px; }
 
 @media(max-width:960px){
   html { scroll-snap-type: y proximity; }
   .landing-screen { height: auto; min-height: 100svh; display: block; }
   .topbar { position:sticky;z-index:12;top:0;height:58px;padding:0 14px;backdrop-filter:blur(9px) }.identity{font-size:15px}.top-actions{gap:10px}.external-links{gap:2px}.external-links a,.external-links button{height:29px}.external-links a{width:27px}.external-links button{padding:0 5px}.external-links button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-  .home-layout { min-height: 0; display: block; }.intro-panel { min-height: 520px; padding: 25px 21px 25px; }.intro-copy{margin-top:60px}.intro-copy h1{font-size:clamp(42px,13vw,50px)}.intro-lead{margin-top:24px;font-size:13px}
-  .project-explorer { min-height: 690px; grid-template-rows: 48px minmax(642px,1fr); }.explorer-header{gap:8px;padding:0 14px}.map-hint{max-width:170px;font-size:15px;line-height:1}.hint-desktop{display:none}.hint-touch{display:inline}.view-switch button{width:30px}
+  .home-layout { min-height: 0; display: block; }.intro-panel { min-height: 520px; padding: 25px 21px 25px; scroll-snap-align:start;scroll-margin-top:58px }.intro-copy{margin-top:60px}.intro-copy h1{font-size:clamp(42px,13vw,50px)}.intro-lead{margin-top:24px;font-size:13px}
+  .project-explorer { min-height: 690px; grid-template-rows: 48px minmax(642px,1fr); scroll-snap-align:start;scroll-margin-top:58px }.explorer-header{gap:8px;padding:0 14px}.map-hint{max-width:170px;font-size:15px;line-height:1}.hint-desktop{display:none}.hint-touch{display:inline}.view-switch button{width:30px}
   .three-atlas{min-height:642px}.fixed-map-card{right:20px;bottom:24px;min-width:150px}.fixed-map-card strong{font-size:12px}
   .list-row{min-height:66px;grid-template-columns:minmax(0,1fr) 18px;gap:8px;padding:0 18px}.list-main strong{font-size:14px}.list-main small,.list-year{display:none}
   .about-screen{min-height:720px;padding:80px 22px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:55px}.about-heading h2{font-size:clamp(40px,11vw,58px)}.about-heading .scribble{margin-bottom:22px}.about-copy p{font-size:13px;line-height:1.75}.about-note{margin-left:12px}
   .site-footer{min-height:520px;padding:55px 22px 25px;display:flex;flex-direction:column;gap:45px}.footer-cta h2{font-size:45px}.footer-meta{margin-top:auto;flex-direction:column;gap:10px}.footer-note p{font-size:15px}
-  .detail-panel{max-height:92vh;grid-template-rows:48px auto}.detail-header{grid-column:1}.detail-copy{padding:32px 24px}.detail-copy h2{font-size:36px}
+  .detail-panel{max-height:92vh;grid-template-rows:42px auto;border-radius:14px}.detail-header{grid-column:1}.detail-copy{padding:26px 22px}.detail-copy h2{font-size:32px}.detail-copy>p:not(.kicker){font-size:13px}
 }
 @media(max-width:420px){.external-links .cv-link{display:none}.top-actions{gap:7px}.view-switch{gap:2px}.view-switch button{width:27px}}
 @media(max-height:700px) and (min-width:961px){.intro-copy{margin-top:45px}.intro-copy h1{font-size:58px}.intro-lead{margin-top:18px}}

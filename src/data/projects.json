@@ -44,7 +44,7 @@
     "title": "Energy Analysis",
     "eyebrow": "Åpen kildekode",
     "description": "Modulær motor for energiberegninger.",
-    "longDescription": "Et Python-bibliotek for analyser av energibehov, varmepumper, solceller, geoenergi og økonomi — laget for gjenbruk.",
+    "longDescription": "Et Python-bibliotek for analyser av energibehov, varmepumper, solceller, geoenergi og økonomi. Det er laget for gjenbruk.",
     "year": "2023–26",
     "tags": ["Python", "API", "Modellering"],
     "color": "#597b7b",
