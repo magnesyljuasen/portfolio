@@ -11,6 +11,7 @@ export type Project = {
   color: string
   position: { x: number; y: number }
   kind: 'geographic' | 'digital'
+  coordinates?: [number, number]
   metric: string
   status: string
   link?: string
@@ -31,6 +32,7 @@ export const projects: Project[] = [
     color: '#355744',
     position: { x: 38, y: 31 },
     kind: 'geographic',
+    coordinates: [10.4, 63.43],
     metric: '10k+ bygg',
     status: 'I bruk',
   },
@@ -48,6 +50,7 @@ export const projects: Project[] = [
     color: '#b85c3d',
     position: { x: 35, y: 68 },
     kind: 'geographic',
+    coordinates: [10.75, 59.91],
     metric: '6 scenarier',
     status: 'Prototype',
   },

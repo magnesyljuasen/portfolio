@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { ArrowDownToLine, ArrowUpRight, Github, LayoutList, Linkedin, Map, MapPin, X } from 'lucide-react'
-import ProjectAtlas from './ProjectAtlas'
 import { projects, type Project } from './data'
+
+const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 
 const githubUrl = 'https://github.com/magnesyljuasen'
 const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
@@ -47,32 +48,32 @@ export default function App() {
 
   return (
     <main className="portfolio-shell">
-      <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
-        <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">
-          <span className="identity-mark">MS</span><span>Magne Syljuåsen</span>
-        </a>
-        <nav className="external-links" aria-label="Eksterne lenker">
-          <a href={linkedinUrl} target="_blank" rel="noreferrer"><span>LinkedIn</span><Linkedin size={14} /></a>
-          <a href={githubUrl} target="_blank" rel="noreferrer"><span>GitHub</span><Github size={14} /></a>
-          <button disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
-        </nav>
-      </header>
+      <div className="landing-screen">
+        <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
+          <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">
+            <span className="identity-mark">MS</span><span>Magne Syljuåsen</span>
+          </a>
+          <nav className="external-links" aria-label="Eksterne lenker">
+            <a href={linkedinUrl} target="_blank" rel="noreferrer"><span>LinkedIn</span><Linkedin size={14} /></a>
+            <a href={githubUrl} target="_blank" rel="noreferrer"><span>GitHub</span><Github size={14} /></a>
+            <button disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
+          </nav>
+        </header>
 
-      <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
-        <article className="intro-panel">
-          <p className="kicker"><i /> Hei, og velkommen</p>
-          <div className="intro-copy">
-            <h1>Jeg er<br /><strong>Magne.</strong></h1>
-            <p className="intro-lead">29 år gammel sivilingeniør, energirådgiver og utvikler.</p>
-            <p className="intro-body">Jeg kombinerer energi, data, KI og kreativ problemløsning for å gjøre komplekse ting enklere å forstå — og bedre å bruke.</p>
-          </div>
-          <div className="intro-bottom">
-            <div className="discipline-list">
-              <span>01 / Energi</span><span>02 / Utvikling</span><span>03 / KI</span><span>04 / Kreativitet</span>
+        <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
+          <article className="intro-panel">
+            <span className="scribble intro-scribble">hei og velkommen!</span>
+            <div className="intro-copy">
+              <h1>Jeg brenner for <strong>smartere måter å jobbe på.</strong></h1>
+              <p className="intro-lead">Datadrevne beslutninger, koding, automatisering, effektivisering og struktur.</p>
+              <p className="intro-body">Jeg er en 29 år gammel sivilingeniør og utvikler som liker å gjøre komplekse problemer forståelige — og bygge løsninger som faktisk blir brukt.</p>
             </div>
-            <p><i /> Oslo, Norge<br /><span>Tilgjengelig for gode idéer</span></p>
-          </div>
-        </article>
+            <div className="intro-bottom">
+              <div className="discipline-list">
+                <span>01 / Energi</span><span>02 / Utvikling</span><span>03 / KI</span><span>04 / Kreativitet</span>
+              </div>
+            </div>
+          </article>
 
         <section className="project-explorer" aria-label="Prosjektutforsker">
           <header className="explorer-header">
@@ -88,7 +89,9 @@ export default function App() {
 
           <div className="explorer-body">
             {view === 'map' ? (
-              <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} />
+              <Suspense fallback={<div className="map-loading"><span>tegner kartet...</span></div>}>
+                <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} />
+              </Suspense>
             ) : (
               <div className="project-list" role="list">
                 {projects.map((project) => (
@@ -108,8 +111,25 @@ export default function App() {
             <span style={{ '--active-color': activeProject.color } as React.CSSProperties}><i /> {activeProject.title}</span>
             <span>Hold over et punkt · klikk for å utforske</span>
           </footer>
+          </section>
         </section>
-      </section>
+      </div>
+
+      <footer className="site-footer">
+        <div className="footer-note">
+          <span className="scribble">helt nederst!</span>
+          <p>Har du en idé, et vanskelig problem<br />eller bare lyst til å slå av en prat?</p>
+        </div>
+        <div className="footer-cta">
+          <h2>La oss lage noe<br /><span>nyttig sammen.</span></h2>
+          <a href={linkedinUrl} target="_blank" rel="noreferrer">Ta kontakt på LinkedIn <ArrowUpRight size={18} /></a>
+        </div>
+        <div className="footer-meta">
+          <span>© 2026 Magne Syljuåsen</span>
+          <span>Sivilingeniør · energirådgiver · utvikler</span>
+          <a href={githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </footer>
 
       {selectedProject && <ProjectDetail project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </main>
