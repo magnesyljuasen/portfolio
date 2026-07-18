@@ -103,7 +103,7 @@ function DigitalIsland() {
         <lineBasicMaterial color="#a4563f" transparent opacity={.8} />
       </lineSegments>
       <Html position={[-4.65, -.1, .46]} center distanceFactor={13} className="island-label">
-        <span>digitalt</span><small>ingen fast adresse</small>
+        <span>digitalt</span>
       </Html>
     </group>
   )
@@ -127,14 +127,6 @@ function Marker({ project, active, onActive, onOpen }: { project: Project; activ
       </mesh>
       <Html position={[.18, .2, .2]} distanceFactor={12} className={`three-label ${active ? 'is-active' : ''}`}>
         <span className="three-label-number">{project.number}</span>
-        {active && (
-          <button onClick={onOpen}>
-            <small>{project.eyebrow}</small>
-            <strong>{project.title}</strong>
-            <span>{project.description}</span>
-            <em>Se prosjekt →</em>
-          </button>
-        )}
       </Html>
     </group>
   )
@@ -165,6 +157,7 @@ function MapScene({ projects, active, onActive, onOpen }: Props) {
 
 export default function ProjectAtlas(props: Props) {
   const isCompact = typeof window !== 'undefined' && window.innerWidth <= 820
+  const activeProject = props.projects.find((project) => project.id === props.active) ?? props.projects[0]
   return (
     <div className="three-atlas">
       <Canvas
@@ -175,8 +168,10 @@ export default function ProjectAtlas(props: Props) {
       >
         <MapScene {...props} />
       </Canvas>
-      <div className="map-note"><span>hold over et prosjekt</span><i>↘</i></div>
-      <div className="map-legend"><span><i /> sted</span><span><i /> digital øy</span></div>
+      <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>
+        <strong>{activeProject.title}</strong>
+        <span>Se prosjekt →</span>
+      </button>
     </div>
   )
 }

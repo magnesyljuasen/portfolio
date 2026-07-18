@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { ArrowDownToLine, ArrowUpRight, Github, LayoutList, Linkedin, Map, MapPin, X } from 'lucide-react'
+import { ArrowDownToLine, ArrowUpRight, Github, LayoutList, Linkedin, Map, X } from 'lucide-react'
 import { projects, type Project } from './data'
 
 const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
@@ -21,18 +21,11 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
           <span>{project.number} / {project.year}</span>
           <button onClick={onClose} aria-label="Lukk prosjekt"><X size={18} /></button>
         </header>
-        <div className="detail-visual" style={{ '--project-color': project.color } as React.CSSProperties}>
-          <span className="detail-orbit" /><span className="detail-number">{project.number}</span>
-        </div>
         <div className="detail-copy">
           <p className="kicker">{project.eyebrow}</p>
           <h2 id="detail-title">{project.title}</h2>
           <p>{project.longDescription}</p>
-          <dl>
-            <div><dt>Resultat</dt><dd>{project.metric}</dd></div>
-            <div><dt>Status</dt><dd>{project.status}</dd></div>
-            <div><dt>Sted</dt><dd>{project.location}</dd></div>
-          </dl>
+          <p className="detail-meta">{project.status} · {project.metric}</p>
           <div className="detail-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         </div>
       </article>
@@ -44,10 +37,9 @@ export default function App() {
   const [view, setView] = useState<'map' | 'list'>('map')
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const activeProject = projects.find((project) => project.id === activeId) ?? projects[0]
 
   return (
-    <main className="portfolio-shell">
+    <main className={`portfolio-shell ${selectedProject ? 'detail-open' : ''}`}>
       <div className="landing-screen">
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">
@@ -62,7 +54,6 @@ export default function App() {
 
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
-            <span className="scribble intro-scribble">hei og velkommen!</span>
             <div className="intro-copy">
               <h1>Jeg brenner for <strong>smartere måter å jobbe på.</strong></h1>
               <p className="intro-lead">Datadrevne beslutninger, koding, automatisering, effektivisering og struktur.</p>
@@ -77,10 +68,6 @@ export default function App() {
 
         <section className="project-explorer" aria-label="Prosjektutforsker">
           <header className="explorer-header">
-            <div>
-              <p className="kicker">Arbeid / {projects.length.toString().padStart(2, '0')} prosjekter</p>
-              <h2>{view === 'map' ? 'Prosjektkart' : 'Alle prosjekter'}</h2>
-            </div>
             <div className="view-switch" role="group" aria-label="Velg prosjektvisning">
               <button className={view === 'map' ? 'is-active' : ''} onClick={() => setView('map')} aria-pressed={view === 'map'}><Map size={14} /><span>Kart</span></button>
               <button className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-pressed={view === 'list'}><LayoutList size={14} /><span>Liste</span></button>
@@ -98,7 +85,6 @@ export default function App() {
                   <button key={project.id} className="list-row" onMouseEnter={() => setActiveId(project.id)} onFocus={() => setActiveId(project.id)} onClick={() => setSelectedProject(project)} role="listitem">
                     <span className="list-number">{project.number}</span>
                     <span className="list-main"><strong>{project.title}</strong><small>{project.description}</small></span>
-                    <span className="list-place"><MapPin size={12} /> {project.location}</span>
                     <span className="list-year">{project.year}</span>
                     <ArrowUpRight size={17} />
                   </button>
@@ -107,10 +93,6 @@ export default function App() {
             )}
           </div>
 
-          <footer className="explorer-footer">
-            <span style={{ '--active-color': activeProject.color } as React.CSSProperties}><i /> {activeProject.title}</span>
-            <span>Hold over et punkt · klikk for å utforske</span>
-          </footer>
           </section>
         </section>
       </div>
