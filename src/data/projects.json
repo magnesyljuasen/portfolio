@@ -1,0 +1,68 @@
+[
+  {
+    "id": "energiplanlegging",
+    "title": "Energi­planlegging",
+    "eyebrow": "Analyseverktøy",
+    "description": "Fra tusenvis av bygg til konkrete energitiltak.",
+    "longDescription": "Et visuelt beslutningsverktøy som samler bygningsdata, energibehov og lokale forutsetninger i ett tydelig arbeidsrom.",
+    "year": "2024",
+    "tags": ["Python", "GeoData", "Energi"],
+    "color": "#355744",
+    "kind": "digital",
+    "metric": "10k+ bygg",
+    "status": "I bruk"
+  },
+  {
+    "id": "klimaetaten",
+    "title": "Mål for Klimaetaten",
+    "eyebrow": "Dataprodukt",
+    "description": "Scenarioer som gjør klimatiltak målbare.",
+    "longDescription": "En prototype for å utforske hvordan ulike energi- og klimatiltak påvirker forbruk, kostnader og utslipp på områdenivå.",
+    "year": "2024",
+    "tags": ["UX", "Data", "Klima"],
+    "color": "#b85c3d",
+    "kind": "geographic",
+    "coordinates": [10.75, 59.91],
+    "metric": "6 scenarier",
+    "status": "Prototype"
+  },
+  {
+    "id": "floorplanner",
+    "title": "Floor Planner",
+    "eyebrow": "Kreativt verktøy",
+    "description": "Tegn rom i 2D. Opplev dem i 3D.",
+    "longDescription": "En nettbasert plantegner med sanntidsvisning, materialbibliotek og et enkelt grensesnitt for å forme rom uten CAD-erfaring.",
+    "year": "2026",
+    "tags": ["React", "Three.js", "Design"],
+    "color": "#d5a642",
+    "kind": "digital",
+    "metric": "2D → 3D",
+    "status": "Pågår"
+  },
+  {
+    "id": "energyanalysis",
+    "title": "Energy Analysis",
+    "eyebrow": "Åpen kildekode",
+    "description": "Modulær motor for energiberegninger.",
+    "longDescription": "Et Python-bibliotek for analyser av energibehov, varmepumper, solceller, geoenergi og økonomi — laget for gjenbruk.",
+    "year": "2023–26",
+    "tags": ["Python", "API", "Modellering"],
+    "color": "#597b7b",
+    "kind": "digital",
+    "metric": "15+ moduler",
+    "status": "Aktivt"
+  },
+  {
+    "id": "vmspillet",
+    "title": "VM-spillet",
+    "eyebrow": "Side project",
+    "description": "Et lite spill med stor konkurransefaktor.",
+    "longDescription": "En leken webopplevelse bygget for raske runder, tydelig feedback og den klassiske følelsen av ‘bare én gang til’.",
+    "year": "2026",
+    "tags": ["Game", "React", "Canvas"],
+    "color": "#7c6b51",
+    "kind": "digital",
+    "metric": "60 fps",
+    "status": "Eksperiment"
+  }
+]

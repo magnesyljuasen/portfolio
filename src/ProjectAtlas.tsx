@@ -12,20 +12,20 @@ type Props = {
   active: string
   onActive: (id: string) => void
   onOpen: (project: Project) => void
+  onReady: () => void
 }
 
-const digitalPositions: Record<string, [number, number]> = {
-  floorplanner: [-4.75, 1.15],
-  energyanalysis: [-3.95, -.45],
-  vmspillet: [-5.05, -1.75],
-}
+const digitalPositions: [number, number][] = [
+  [-4.85, 1.2], [-5.35, .2], [-4.05, .35], [-4.65, -1.05],
+  [-5.5, -1.15], [-3.75, -.8], [-5.65, .9], [-3.75, 1.15],
+]
 
-function projectPoint(project: Project): [number, number] {
+function projectPoint(project: Project, digitalIndex: number): [number, number] {
   if (project.coordinates) {
     const [lon, lat] = project.coordinates
     return [(lon - 13) * 0.32, (lat - 64.5) * 0.55]
   }
-  return digitalPositions[project.id] ?? [6.3, 0]
+  return digitalPositions[digitalIndex % digitalPositions.length]
 }
 
 function shapeFromRing(ring: number[][]) {
@@ -109,8 +109,8 @@ function DigitalIsland() {
   )
 }
 
-function Marker({ project, active, onActive, onOpen }: { project: Project; active: boolean; onActive: () => void; onOpen: () => void }) {
-  const [x, y] = projectPoint(project)
+function Marker({ project, digitalIndex, active, onActive, onOpen }: { project: Project; digitalIndex: number; active: boolean; onActive: () => void; onOpen: () => void }) {
+  const [x, y] = projectPoint(project, digitalIndex)
   return (
     <group position={[x, y, .52]}>
       <mesh
@@ -145,30 +145,44 @@ function MapScene({ projects, active, onActive, onOpen }: Props) {
         <NorwayGeometry />
         <DigitalIsland />
         {projects.map((project) => (
-          <Marker key={project.id} project={project} active={project.id === active} onActive={() => onActive(project.id)} onOpen={() => onOpen(project)} />
+          <Marker key={project.id} project={project} digitalIndex={projects.filter((item) => item.kind === 'digital').findIndex((item) => item.id === project.id)} active={project.id === active} onActive={() => onActive(project.id)} onOpen={() => onOpen(project)} />
         ))}
       </group>
     </>
   )
 }
 
+function ReadySignal({ onReady }: { onReady: () => void }) {
+  const sent = useRef(false)
+  useFrame(() => {
+    if (sent.current) return
+    sent.current = true
+    onReady()
+  })
+  return null
+}
+
 export default function ProjectAtlas(props: Props) {
-  const isCompact = typeof window !== 'undefined' && window.innerWidth <= 820
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1280
+  const isCompact = viewportWidth <= 960
+  const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
+  const mapZoom = isCompact ? Math.min(64, viewportWidth / 13) : Math.min(58, desktopMapWidth / 13)
   const activeProject = props.projects.find((project) => project.id === props.active) ?? props.projects[0]
   return (
     <div className="three-atlas">
       <Canvas
         dpr={[1, 1.75]}
         orthographic
-        camera={{ position: [0, 0, 20], zoom: isCompact ? 30 : 58, near: .1, far: 100 }}
+        camera={{ position: [0, 0, 20], zoom: mapZoom, near: .1, far: 100 }}
         shadows
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
+        <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>
         <strong>{activeProject.title}</strong>
-        <span>Se prosjekt →</span>
+        <span aria-hidden="true">↗</span>
       </button>
     </div>
   )
