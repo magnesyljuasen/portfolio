@@ -125,9 +125,6 @@ function Marker({ project, active, onActive, onOpen }: { project: Project; activ
         <ringGeometry args={[active ? .23 : .19, active ? .25 : .205, 32]} />
         <meshBasicMaterial color="#283028" transparent opacity={active ? .8 : .35} side={THREE.DoubleSide} />
       </mesh>
-      <Html position={[.18, .2, .2]} distanceFactor={12} className={`three-label ${active ? 'is-active' : ''}`}>
-        <span className="three-label-number">{project.number}</span>
-      </Html>
     </group>
   )
 }
@@ -136,8 +133,8 @@ function MapScene({ projects, active, onActive, onOpen }: Props) {
   const group = useRef<Group>(null)
   useFrame((state) => {
     if (!group.current) return
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, .12 + state.pointer.y * .025, .04)
-    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, -.08 + state.pointer.x * .04, .04)
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, state.pointer.y * .012, .04)
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.pointer.x * .018, .04)
   })
 
   return (
@@ -162,7 +159,8 @@ export default function ProjectAtlas(props: Props) {
     <div className="three-atlas">
       <Canvas
         dpr={[1, 1.75]}
-        camera={{ position: isCompact ? [-.3, 0, 25] : [-.2, 0, 16.5], fov: isCompact ? 44 : 42 }}
+        orthographic
+        camera={{ position: [0, 0, 20], zoom: isCompact ? 30 : 58, near: .1, far: 100 }}
         shadows
         gl={{ antialias: true, alpha: true }}
       >

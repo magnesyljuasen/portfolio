@@ -7,6 +7,15 @@ const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 const githubUrl = 'https://github.com/magnesyljuasen'
 const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 
+function SiteLoader() {
+  return (
+    <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
+      <span className="loader-mark">MS</span>
+      <span className="loader-line" />
+    </div>
+  )
+}
+
 function ProjectDetail({ project, onClose }: { project: Project; onClose: () => void }) {
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose()
@@ -18,7 +27,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
     <div className="detail-backdrop" role="presentation" onMouseDown={onClose}>
       <article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
         <header className="detail-header">
-          <span>{project.number} / {project.year}</span>
+          <span>{project.year}</span>
           <button onClick={onClose} aria-label="Lukk prosjekt"><X size={18} /></button>
         </header>
         <div className="detail-copy">
@@ -34,12 +43,22 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const [view, setView] = useState<'map' | 'list'>('map')
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
+  useEffect(() => {
+    let timer: number
+    const finishLoading = () => { timer = window.setTimeout(() => setIsLoading(false), 800) }
+    if (document.readyState === 'complete') finishLoading()
+    else window.addEventListener('load', finishLoading, { once: true })
+    return () => { window.removeEventListener('load', finishLoading); window.clearTimeout(timer) }
+  }, [])
+
   return (
     <main className={`portfolio-shell ${selectedProject ? 'detail-open' : ''}`}>
+      {isLoading && <SiteLoader />}
       <div className="landing-screen">
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">
@@ -83,7 +102,6 @@ export default function App() {
               <div className="project-list" role="list">
                 {projects.map((project) => (
                   <button key={project.id} className="list-row" onMouseEnter={() => setActiveId(project.id)} onFocus={() => setActiveId(project.id)} onClick={() => setSelectedProject(project)} role="listitem">
-                    <span className="list-number">{project.number}</span>
                     <span className="list-main"><strong>{project.title}</strong><small>{project.description}</small></span>
                     <span className="list-year">{project.year}</span>
                     <ArrowUpRight size={17} />
