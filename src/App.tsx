@@ -11,7 +11,8 @@ function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
       <div className="loader-copy">
-        <strong>Hei og velkommen<br />til porteføljesiden min</strong>
+        <strong>Velkommen.</strong>
+        <p>Her er noe av det jeg har laget.</p>
         <span>– Magne Syljuåsen</span>
       </div>
       <span className="loader-line" />
@@ -72,7 +73,7 @@ export default function App() {
   }, [pageReady, mapReady])
 
   return (
-    <main className={`portfolio-shell ${selectedProject ? 'detail-open' : ''}`}>
+    <main className={`portfolio-shell ${isLoading ? 'is-loading' : ''} ${selectedProject ? 'detail-open' : ''}`}>
       {isLoading && <SiteLoader />}
       <div className="landing-screen">
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>

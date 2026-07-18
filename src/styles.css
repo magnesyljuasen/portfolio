@@ -12,9 +12,11 @@ button, a { color: inherit; font: inherit; -webkit-tap-highlight-color: transpar
 a { text-decoration: none; }
 button { cursor: pointer; }
 .portfolio-shell { width: 100%; min-height: 100%; background: #f1ede3; }
+.portfolio-shell.is-loading .three-atlas { opacity: 0; }
 .site-loader { position: fixed; z-index: 100; inset: 0; display: grid; place-content: center; gap: 24px; padding: 28px; background: #f1ede3; text-align: center; }
 .loader-copy strong { display: block; font-size: clamp(18px,2.4vw,29px); font-weight: 500; letter-spacing: -.045em; }
-.loader-copy span { display: block; margin-top: 9px; color: #a84f37; font-family: 'Caveat',cursive; font-size: 18px; transform: rotate(-2deg); }
+.loader-copy p { margin: 7px 0 0; color: #626a62; font-size: clamp(10px,1vw,13px); }
+.loader-copy span { display: block; margin-top: 12px; color: #a84f37; font-family: 'Caveat',cursive; font-size: 18px; transform: rotate(-2deg); }
 .loader-line { width: 110px; height: 1px; justify-self: center; overflow: hidden; background: #d2ccbf; }
 .loader-line::after { content: ''; display: block; width: 45%; height: 100%; background: #a84f37; animation: loader-line 1s ease-in-out infinite; }
 @keyframes loader-line { from { transform: translateX(-110%); } to { transform: translateX(225%); } }
