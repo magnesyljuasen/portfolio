@@ -10,6 +10,7 @@ export type Project = {
   tags: string[]
   color: string
   position: { x: number; y: number }
+  kind: 'geographic' | 'digital'
   metric: string
   status: string
   link?: string
@@ -28,7 +29,8 @@ export const projects: Project[] = [
     year: '2024',
     tags: ['Python', 'GeoData', 'Energi'],
     color: '#355744',
-    position: { x: 25, y: 34 },
+    position: { x: 38, y: 31 },
+    kind: 'geographic',
     metric: '10k+ bygg',
     status: 'I bruk',
   },
@@ -44,7 +46,8 @@ export const projects: Project[] = [
     year: '2024',
     tags: ['UX', 'Data', 'Klima'],
     color: '#b85c3d',
-    position: { x: 61, y: 24 },
+    position: { x: 35, y: 68 },
+    kind: 'geographic',
     metric: '6 scenarier',
     status: 'Prototype',
   },
@@ -60,7 +63,8 @@ export const projects: Project[] = [
     year: '2026',
     tags: ['React', 'Three.js', 'Design'],
     color: '#d5a642',
-    position: { x: 74, y: 61 },
+    position: { x: 78, y: 31 },
+    kind: 'digital',
     metric: '2D → 3D',
     status: 'Pågår',
   },
@@ -76,7 +80,8 @@ export const projects: Project[] = [
     year: '2023–26',
     tags: ['Python', 'API', 'Modellering'],
     color: '#597b7b',
-    position: { x: 43, y: 70 },
+    position: { x: 84, y: 53 },
+    kind: 'digital',
     metric: '15+ moduler',
     status: 'Aktivt',
   },
@@ -92,7 +97,8 @@ export const projects: Project[] = [
     year: '2026',
     tags: ['Game', 'React', 'Canvas'],
     color: '#7c6b51',
-    position: { x: 18, y: 72 },
+    position: { x: 75, y: 72 },
+    kind: 'digital',
     metric: '60 fps',
     status: 'Eksperiment',
   },

@@ -1,92 +1,76 @@
-import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, MapPin } from 'lucide-react'
 import type { Project } from './data'
 
 type Props = {
   projects: Project[]
-  active: string | null
-  onActive: (id: string | null) => void
+  active: string
+  onActive: (id: string) => void
   onOpen: (project: Project) => void
 }
 
-function DotField() {
-  const dots = Array.from({ length: 110 }, (_, i) => {
-    const x = (i * 37 + (i % 7) * 11) % 100
-    const y = (i * 61 + Math.floor(i / 5) * 7) % 100
-    const opacity = 0.1 + ((i * 13) % 25) / 100
-    return { x, y, opacity, size: i % 9 === 0 ? 2.3 : 1.2 }
-  })
-
+function NorwayMap() {
   return (
-    <svg className="atlas-dots" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      {dots.map((dot, i) => (
-        <circle key={i} cx={dot.x} cy={dot.y} r={dot.size / 4} fill="#355744" opacity={dot.opacity} />
-      ))}
-      <path d="M-5 68 C 12 53, 18 25, 39 36 S 65 84, 108 48" fill="none" stroke="#355744" strokeOpacity=".12" strokeWidth=".25" strokeDasharray="1 1.5" />
-      <path d="M5 20 C 27 5, 44 27, 58 17 S 83 7, 105 25" fill="none" stroke="#b85c3d" strokeOpacity=".12" strokeWidth=".25" />
+    <svg className="norway-map" viewBox="0 0 520 760" aria-hidden="true">
+      <defs>
+        <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#d8ddcf" stopOpacity=".45" />
+          <stop offset="1" stopColor="#9eaa98" stopOpacity=".08" />
+        </linearGradient>
+      </defs>
+      <path
+        className="norway-shape"
+        d="M262 24 C300 32 333 49 355 75 L337 103 370 127 344 158 368 183 337 217 354 246 320 282 337 315 303 349 322 384 290 421 305 459 272 495 286 535 253 568 266 606 235 639 239 681 211 728 180 710 190 671 166 648 186 615 164 585 191 552 174 516 202 481 188 444 215 410 202 374 229 338 216 300 244 265 230 229 257 194 244 157 274 124 258 88 280 58 Z"
+      />
+      <path className="map-line" d="M259 88 L306 120 263 160 315 210 260 267 302 335 244 401 280 472 217 544 253 605 204 671" />
+      <path className="map-line" d="M250 194 L337 217 M216 300 L303 349 M202 444 L272 495 M191 552 L253 568" />
+      <circle cx="278" cy="585" r="3" className="map-city" />
+      <text x="290" y="589" className="map-city-label">OSLO</text>
+      <circle cx="254" cy="405" r="3" className="map-city" />
+      <text x="267" y="409" className="map-city-label">TRONDHEIM</text>
+      <text x="205" y="744" className="map-country-label">NORGE</text>
     </svg>
   )
 }
 
 export default function ProjectAtlas({ projects, active, onActive, onOpen }: Props) {
-  const atlasRef = useRef<HTMLDivElement>(null)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const reset = () => setTilt({ x: 0, y: 0 })
-    window.addEventListener('blur', reset)
-    return () => window.removeEventListener('blur', reset)
-  }, [])
-
-  const handleMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const rect = event.currentTarget.getBoundingClientRect()
-    setTilt({
-      x: ((event.clientY - rect.top) / rect.height - 0.5) * -2.2,
-      y: ((event.clientX - rect.left) / rect.width - 0.5) * 2.2,
-    })
-  }
-
   return (
-    <div
-      ref={atlasRef}
-      className="project-atlas"
-      onPointerMove={handleMove}
-      onPointerLeave={() => setTilt({ x: 0, y: 0 })}
-      style={{ transform: `perspective(1100px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
-    >
-      <DotField />
-      <div className="atlas-glow" />
-      <div className="atlas-label atlas-label-top">PROJECT ATLAS / 01—05</div>
-      <div className="atlas-label atlas-label-bottom">ENERGY · DATA · DIGITAL</div>
+    <div className="project-atlas">
+      <div className="atlas-grid" aria-hidden="true" />
+      <NorwayMap />
+      <div className="digital-zone" aria-hidden="true">
+        <span>Digitalt</span>
+        <small>uten sted</small>
+      </div>
+      <div className="atlas-key" aria-hidden="true">
+        <span><i className="geo-key" /> Geografisk</span>
+        <span><i className="digital-key" /> Digitalt</span>
+      </div>
 
       {projects.map((project) => {
-        const isActive = active === project.id
+        const isActive = project.id === active
         return (
           <button
             key={project.id}
-            className={`project-node ${isActive ? 'is-active' : ''}`}
-            style={{ left: `${project.position.x}%`, top: `${project.position.y}%`, '--node': project.color } as React.CSSProperties}
+            className={`map-node ${project.kind} ${isActive ? 'is-active' : ''}`}
+            style={{
+              left: `${project.position.x}%`,
+              top: `${project.position.y}%`,
+              '--node-color': project.color,
+            } as React.CSSProperties}
             onMouseEnter={() => onActive(project.id)}
-            onMouseLeave={() => onActive(null)}
             onFocus={() => onActive(project.id)}
-            onBlur={() => onActive(null)}
             onClick={() => onOpen(project)}
             aria-label={`Åpne ${project.title}`}
           >
-            <span className="node-pulse" />
-            <span className="node-core" />
-            <span className="node-number">{project.number}</span>
-            <span className="node-title">{project.title}</span>
+            <span className="map-node-ring" />
+            <span className="map-node-dot" />
+            <span className="map-node-label">{project.number}</span>
 
-            <span className="node-card">
-              <span className="node-card-top">
-                <span>{project.eyebrow}</span>
-                <ArrowUpRight size={15} />
-              </span>
+            <span className="map-tooltip">
+              <span className="tooltip-top"><span>{project.eyebrow}</span><ArrowUpRight size={13} /></span>
               <strong>{project.title}</strong>
-              <span className="node-description">{project.description}</span>
-              <span className="node-meta"><MapPin size={13} /> {project.location} · {project.year}</span>
+              <span className="tooltip-description">{project.description}</span>
+              <span className="tooltip-meta"><MapPin size={11} /> {project.location} · {project.year}</span>
             </span>
           </button>
         )
