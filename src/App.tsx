@@ -11,9 +11,7 @@ function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
       <div className="loader-copy">
-        <strong>Velkommen!</strong>
-        <p>Et øyeblikk, jeg gjør kartet klart.</p>
-        <span>Magne Syljuåsen</span>
+        <strong>Magne Syljuåsen</strong>
       </div>
       <span className="loader-line" />
     </div>
