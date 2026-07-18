@@ -1,10 +1,10 @@
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import { feature } from 'topojson-client'
 import world from 'world-atlas/countries-50m.json'
 import * as THREE from 'three'
-import { useMemo, useRef } from 'react'
-import type { Group } from 'three'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Group, OrthographicCamera } from 'three'
 import type { Project } from './data'
 
 type Props = {
@@ -161,8 +161,22 @@ function ReadySignal({ onReady }: { onReady: () => void }) {
   return null
 }
 
+function ResponsiveCamera({ zoom }: { zoom: number }) {
+  const camera = useThree((state) => state.camera) as OrthographicCamera
+  useEffect(() => {
+    camera.zoom = zoom
+    camera.updateProjectionMatrix()
+  }, [camera, zoom])
+  return null
+}
+
 export default function ProjectAtlas(props: Props) {
-  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1280
+  const [viewportWidth, setViewportWidth] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 1280)
+  useEffect(() => {
+    const updateWidth = () => setViewportWidth(window.innerWidth)
+    window.addEventListener('resize', updateWidth)
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [])
   const isCompact = viewportWidth <= 960
   const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
   const mapZoom = isCompact ? Math.min(64, viewportWidth / 10.5) : Math.min(58, desktopMapWidth / 10.5)
@@ -177,6 +191,7 @@ export default function ProjectAtlas(props: Props) {
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
+        <ResponsiveCamera zoom={mapZoom} />
         <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>

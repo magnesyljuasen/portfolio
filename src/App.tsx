@@ -11,8 +11,8 @@ function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
       <div className="loader-copy">
-        <strong>Velkommen.</strong>
-        <p>Her er noe av det jeg har laget.</p>
+        <strong>Velkommen!</strong>
+        <p>Et øyeblikk — jeg gjør kartet klart.</p>
         <span>– Magne Syljuåsen</span>
       </div>
       <span className="loader-line" />
@@ -78,11 +78,17 @@ export default function App() {
       <div className="landing-screen">
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
-          <nav className="external-links" aria-label="Eksterne lenker">
-            <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
-            <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
-            <button disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
-          </nav>
+          <div className="top-actions">
+            <div className="view-switch" role="group" aria-label="Velg prosjektvisning">
+              <button className={view === 'map' ? 'is-active' : ''} onClick={() => setView('map')} aria-label="Kartvisning" title="Kartvisning" aria-pressed={view === 'map'}><Map size={14} /></button>
+              <button className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-label="Listevisning" title="Listevisning" aria-pressed={view === 'list'}><LayoutList size={14} /></button>
+            </div>
+            <nav className="external-links" aria-label="Eksterne lenker">
+              <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
+              <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
+              <button className="cv-link" disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
+            </nav>
+          </div>
         </header>
 
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
@@ -97,10 +103,6 @@ export default function App() {
           <section className="project-explorer" aria-label="Prosjektutforsker">
             <header className="explorer-header">
               {view === 'map' && <span className="map-hint"><span className="hint-desktop">hold over en prikk for å se prosjekt</span><span className="hint-touch">trykk på en prikk for å se prosjekt</span></span>}
-              <div className="view-switch" role="group" aria-label="Velg prosjektvisning">
-                <button className={view === 'map' ? 'is-active' : ''} onClick={() => setView('map')} aria-label="Kartvisning" title="Kartvisning" aria-pressed={view === 'map'}><Map size={14} /></button>
-                <button className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-label="Listevisning" title="Listevisning" aria-pressed={view === 'list'}><LayoutList size={14} /></button>
-              </div>
             </header>
 
             <div className="explorer-body">
@@ -124,10 +126,23 @@ export default function App() {
         </section>
       </div>
 
+      <section className="about-screen" aria-labelledby="about-title">
+        <div className="about-heading">
+          <span className="scribble">kort fortalt</span>
+          <h2 id="about-title">Sivilingeniør som havnet stadig dypere i <span>kode.</span></h2>
+        </div>
+        <div className="about-copy">
+          <p>Jeg er 29 år og jobber i Asplan Viak med data og energirådgivning. Det er derfor mange av prosjektene mine har et tydelig energipreg.</p>
+          <p>Jeg har kodet mye i Python i flere år, og bruker nå KI aktivt som en del av utviklingsarbeidet.</p>
+          <p>I praksis jobber jeg i krysningspunktet mellom energi, data og utvikling — en slags hybrid KI-utvikler.</p>
+          <span className="about-note">energi + data + kode + KI</span>
+        </div>
+      </section>
+
       <footer className="site-footer">
         <div className="footer-note">
           <span className="scribble">en liten fotnote</span>
-          <p>Jeg liker problemer med litt motstand — særlig når data og kode kan gjøre dem enklere.</p>
+          <p>Jeg liker problemer med litt motstand, særlig når data og kode kan gjøre dem enklere.</p>
         </div>
         <div className="footer-cta">
           <h2>Har du et problem<br />som burde vært <span>enklere?</span></h2>
