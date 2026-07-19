@@ -7,10 +7,75 @@ const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 const githubUrl = 'https://github.com/magnesyljuasen'
 const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 
+function RoseLoader() {
+  const groupRef = useRef<SVGGElement>(null)
+  const pathRef = useRef<SVGPathElement>(null)
+
+  useEffect(() => {
+    const group = groupRef.current
+    const path = pathRef.current
+    if (!group || !path) return
+
+    const particles = Array.from(group.querySelectorAll('circle'))
+    const particleCount = particles.length
+    const duration = 5400
+    const trailSpan = .32
+    const point = (progress: number, detailScale: number) => {
+      const t = progress * Math.PI * 2
+      const r = (9.2 + detailScale * .6) * (.72 + detailScale * .28) * Math.cos(5 * t)
+      return { x: 50 + Math.cos(t) * r * 3.25, y: 50 + Math.sin(t) * r * 3.25 }
+    }
+    const draw = (time: number) => {
+      const progress = (time % duration) / duration
+      const pulseAngle = ((time % 4600) / 4600) * Math.PI * 2
+      const detailScale = .52 + ((Math.sin(pulseAngle + .55) + 1) / 2) * .48
+      const pathData = Array.from({ length: 321 }, (_, index) => {
+        const position = point(index / 320, detailScale)
+        return `${index === 0 ? 'M' : 'L'} ${position.x.toFixed(2)} ${position.y.toFixed(2)}`
+      }).join(' ')
+      path.setAttribute('d', pathData)
+      group.setAttribute('transform', `rotate(${-((time % 28000) / 28000) * 360} 50 50)`)
+      particles.forEach((particle, index) => {
+        const tailOffset = index / (particleCount - 1)
+        const normalized = ((progress - tailOffset * trailSpan) % 1 + 1) % 1
+        const position = point(normalized, detailScale)
+        const fade = Math.pow(1 - tailOffset, .56)
+        particle.setAttribute('cx', position.x.toFixed(2))
+        particle.setAttribute('cy', position.y.toFixed(2))
+        particle.setAttribute('r', (.9 + fade * 2.7).toFixed(2))
+        particle.setAttribute('opacity', (.04 + fade * .96).toFixed(3))
+      })
+    }
+
+    const startedAt = performance.now()
+    let frame = 0
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const render = (now: number) => {
+      draw(now - startedAt)
+      frame = window.requestAnimationFrame(render)
+    }
+    if (reducedMotion) draw(1500)
+    else frame = window.requestAnimationFrame(render)
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
+
+  return (
+    <div className="rose-loader" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none">
+        <g ref={groupRef}>
+          <path ref={pathRef} className="rose-path" />
+          {Array.from({ length: 78 }, (_, index) => <circle key={index} fill="currentColor" />)}
+        </g>
+      </svg>
+      <strong>Magne Syljuåsen</strong>
+    </div>
+  )
+}
+
 function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
-      <div className="arcade-loader" aria-hidden="true">Magne Syljuåsen</div>
+      <RoseLoader />
     </div>
   )
 }
