@@ -46,7 +46,6 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
     <div className="detail-backdrop" role="presentation" onMouseDown={onClose}>
       <article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
         <header className="detail-header">
-          <span>{project.context ? `${project.context} · ${project.year}` : project.year}</span>
           <button onClick={onClose} aria-label="Lukk prosjekt"><X size={18} /></button>
         </header>
         <div className="detail-copy">
@@ -54,7 +53,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
           <p className="kicker">{project.eyebrow}</p>
           <h2 id="detail-title">{project.title}</h2>
           <p>{project.longDescription}</p>
-          <p className="detail-meta">{project.status} · {project.metric}</p>
+          <p className="detail-meta">{project.metric}</p>
           <div className="detail-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           {project.link && <a className="detail-link" href={project.link} target="_blank" rel="noreferrer">Se prosjektet <ArrowUpRight size={16} /></a>}
         </div>
