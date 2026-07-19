@@ -125,7 +125,7 @@ export default function App() {
 
   useEffect(() => {
     if (!pageReady || !mapReady) return
-    const minimumDuration = 2600
+    const minimumDuration = 4200
     const remaining = Math.max(0, minimumDuration - (performance.now() - loaderStartedAt.current))
     const timer = window.setTimeout(() => setIsLoading(false), remaining)
     return () => window.clearTimeout(timer)
