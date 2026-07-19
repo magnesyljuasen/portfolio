@@ -10,7 +10,7 @@ python cv/generate_cv.py
 
 ## Historien CV-en bygger på
 
-Magne er en sivilingeniør innen geofag som kombinerer energi- og grunnvarmekompetanse med dataanalyse og digital produktutvikling. Styrken ligger i å se helheten, strukturere komplekse problemer og gjøre beregninger om til beslutningsverktøy som faktisk blir brukt.
+Magne er en tverrfaglig sivilingeniør som har beveget seg fra geofag og praktisk feltarbeid til energi, dataanalyse og digital produktutvikling. Styrken ligger i å lære nye fagområder, se helheten, strukturere komplekse problemer og gjøre beregninger om til løsninger som faktisk blir brukt.
 
 De viktigste bevisene er:
 

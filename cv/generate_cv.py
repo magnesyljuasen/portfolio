@@ -180,7 +180,7 @@ def page_background(canvas, doc):
 
 story = [
     Paragraph("Magne Syljuåsen", styles["Name"]),
-    Paragraph("Sivilingeniør | Energi, data og digitale produkter", styles["Role"]),
+    Paragraph("Sivilingeniør | Data, analyse og digitale løsninger", styles["Role"]),
     Paragraph(
         "451 92 540&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;"
         + link("msylju@gmail.com", "mailto:msylju@gmail.com")
@@ -196,16 +196,17 @@ story = [
 
 story += section("Profil")
 story.append(Paragraph(
-    "Sivilingeniør utdannet innen geofag fra NTNU, med erfaring i skjæringspunktet mellom energi, grunnvarme, dataanalyse og programvareutvikling. Jeg bygger analysemodeller og digitale beslutningsverktøy i Python som gjør komplekse tekniske valg enklere å forstå og gjennomføre. Har utviklet produkter brukt i mer enn 20 kundeprosjekter, og verktøy som er solgt til Norsk Varmepumpeforening og Hafslund.",
+    "Tverrfaglig sivilingeniør med bakgrunn fra geofag, praktisk feltarbeid, energi og utvikling av digitale produkter. Jeg setter meg raskt inn i nye problemstillinger og kombinerer fagkunnskap, data og kode for å finne kjernen i dem og bygge løsninger som andre kan bruke. I Asplan Viak har jeg tatt initiativer fra idé og analysemodell til verktøy i bruk og kommersielle leveranser. Jeg arbeider strukturert, tar ansvar og fungerer godt som bindeledd mellom fag, teknologi og brukerbehov.",
     styles["BodyCV"],
 ))
 
 story += section("Nøkkelkompetanse")
 for text in [
-    "Digital produktutvikling: fra faglig problem og datamodell til brukergrensesnitt, utrulling og videreutvikling.",
-    "Energi og grunnvarme: energiplanlegging, bergvarme, GeoTermos, varmepumper, energibruk i bygg og energiforsyning.",
+    "Tverrfaglig problemløsning: finner kjernen i komplekse problemstillinger og kobler fag, data og brukerbehov.",
     "Data og modellering: Python, Streamlit, GIS, tidsserier, scenarioanalyse, kostnadsberegninger og visualisering.",
-    "Beslutningsstøtte: omsetter store datamengder og komplekse beregninger til tydelige anbefalinger for kunder og prosjektteam.",
+    "Digital produktutvikling: tar løsninger fra problemforståelse og datamodell til brukergrensesnitt, utrulling og videreutvikling.",
+    "Energi og geofag: energiplanlegging, bergvarme, GeoTermos, energibruk i bygg, grunnundersøkelser og teknisk prosjektering.",
+    "Samarbeid og gjennomføring: tar ansvar for leveranser og gjør analyser forståelige for kunder, rådgivere og beslutningstakere.",
 ]:
     story.append(bullet(text))
 
@@ -228,7 +229,7 @@ story.append(Spacer(1, 4))
 story.append(role_row("Sommervikar | If Skadeforsikring", "2016, 2018 og 2019"))
 story.append(bullet("Arbeidet med forbedringer i interne datasystemer og operative arbeidsprosesser."))
 
-story += section("Utvalgte resultater og prosjekter")
+story += section("Utvalgte resultater")
 story.append(project(
     "AV Energiplanlegging",
     "Bygget opp et digitalt produkt for tidligfase energiplanlegging som simulerer mer enn 20 energitiltak og er brukt i mer enn 20 kundeprosjekter. Løsningen kombinerer bygningsregister, energidata, kart og timesbaserte beregninger.",
@@ -244,24 +245,12 @@ story.append(project(
 
 story.append(PageBreak())
 
-story += section("Utvalgte resultater og prosjekter - fortsetter")
-story.append(project(
-    "GeoTermos-kalkulator",
-    "Utviklet et scenarioverktøy som gjør komplekse termiske og økonomiske beregninger tilgjengelige for tidlig vurdering av GeoTermos. Produktet ble solgt til Hafslund.",
-    "Python, Streamlit, geoenergi, simulering, økonomi",
-    "https://av-geotermos-kalkulator.azurewebsites.net/",
-))
+story += section("Utvalgte resultater - fortsetter")
 story.append(project(
     "Energimål for bygg i Oslo",
     "Utviklet analysemodellen bak en utredning av Oslos energimål etter 2030. Modellen beregnet et teknisk effektiviseringspotensial på 4,78 TWh og sammenlignet kostnader og konsekvenser ved tre ambisjonsnivåer.",
     "Python, bygningsdata, kostnadsanalyse, energisystem",
     "https://www.klimaoslo.no/rapport/hva-bor-det-nye-energimalet-for-bygg-i-oslo-vaere/",
-))
-story.append(project(
-    "Konvertering til vannbåren varme - Enova",
-    "Utviklet analysemodell og skrev store deler av rapporten om potensial og kostnader ved konvertering i større norske bygg. Analysen viste et potensial på om lag 13 TWh/år og 3,5 GW frigjort effekt.",
-    "Python, nasjonale bygningsdata, vannbåren varme, rapportering",
-    "https://enova.no/nb/bedrift/bygg-og-eiendom/nye-funn-om-kostnader-for-konvertering-til-vannbaren-varme-i-bygg",
 ))
 story.append(project(
     "Energiplaner for UiT og Kristiansand kommune",
@@ -279,17 +268,6 @@ story.append(project(
     "Har dimensjonert og plassert energibrønner og utarbeidet tekniske beskrivelser for blant annet Flåtaløkka skole, Nord universitet, Andslimoen omsorgsboliger, Myrane idrettshall og svømmeanlegg og Skoppum stasjon.",
     "Bergvarme, dimensjonering, GIS, teknisk prosjektering",
 ))
-story.append(project(
-    "Energiscenarioer for Dokken i Bergen",
-    "Utviklet et scenarioverktøy for et større byutviklingsområde som viser hvordan ulike valg av energiforsyning påvirker energi, effekt og infrastruktur.",
-    "Python, GIS, byutvikling, scenarioanalyse, beslutningsstøtte",
-))
-story.append(project(
-    "Kringsjå studentby",
-    "Analyserte reelle strøm-, varme- og produksjonsdata for 36 bygg og utviklet langsiktige energiscenarioer. Fulgte senere opp tiltak i detaljprosjekt, inkludert varmepumpe og GeoTermos.",
-    "Tidsserier, energiplanlegging, grunnvarme, detaljprosjektering",
-))
-
 story += section("Utdanning")
 story.append(role_row("Master i teknologi (sivilingeniør), tekniske geofag | NTNU", "2015 - 2021"))
 story.append(Paragraph("Fordypning i ingeniørgeologi og bergmekanikk.", styles["Small"]))
@@ -318,8 +296,8 @@ doc = SimpleDocTemplate(
     bottomMargin=17 * mm,
     title="CV - Magne Syljuåsen",
     author="Magne Syljuåsen",
-    subject="Sivilingeniør, energi, data og digitale produkter",
-    keywords="sivilingeniør, energi, energiplanlegging, grunnvarme, bergvarme, Python, Streamlit, GIS, dataanalyse, produktutvikling",
+    subject="Sivilingeniør, data, analyse og digitale løsninger",
+    keywords="sivilingeniør, tverrfaglig problemløsning, dataanalyse, digitale løsninger, energi, energiplanlegging, grunnvarme, bergvarme, Python, Streamlit, GIS, produktutvikling",
 )
 doc.build(story, onFirstPage=page_background, onLaterPages=page_background)
 print(OUTPUT)
