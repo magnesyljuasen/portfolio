@@ -210,7 +210,7 @@ export default function ProjectAtlas(props: Props) {
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
-        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? 1.55 : 0} />
+        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? 2.2 : 0} />
         <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>

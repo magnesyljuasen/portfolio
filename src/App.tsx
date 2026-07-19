@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, X } from 'lucide-react'
+import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, Menu, X } from 'lucide-react'
 import { projectGroups, projects, type Project } from './data'
 
 const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
@@ -49,6 +49,7 @@ export default function App() {
   const [loaderExiting, setLoaderExiting] = useState(false)
   const [pageReady, setPageReady] = useState(false)
   const [mapReady, setMapReady] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const loaderStartedAt = useRef(performance.now())
@@ -119,16 +120,37 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => event.key === 'Escape' && setMobileMenuOpen(false)
+    const handleResize = () => window.innerWidth > 960 && setMobileMenuOpen(false)
+    window.addEventListener('keydown', handleKey)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('keydown', handleKey)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <main className={`portfolio-shell ${isLoading ? 'is-loading' : ''} ${loaderExiting ? 'loader-exiting' : ''} ${selectedProject ? 'detail-open' : ''}`}>
       {isLoading && <SiteLoader exiting={loaderExiting} />}
       <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
         <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
-        <div className="top-actions">
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+          aria-label={mobileMenuOpen ? 'Lukk meny' : 'Åpne meny'}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className={`top-actions ${mobileMenuOpen ? 'is-open' : ''}`} id="mobile-navigation">
           <nav className="site-nav" aria-label="På denne siden">
-            <a href="#projects">Prosjekter</a>
-            <a href="#about">Om meg</a>
-            <a href="#contact">Kontakt</a>
+            <a href="#projects" onClick={() => setMobileMenuOpen(false)}>Prosjekter</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)}>Om meg</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Kontakt</a>
           </nav>
           <nav className="external-links" aria-label="Eksterne lenker">
             <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
