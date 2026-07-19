@@ -20,15 +20,10 @@ const digitalPositions: [number, number][] = [
   [2.7, -.85], [3.55, -1.9], [1.85, -1.65], [2.65, -2.65],
 ]
 
-const geographicOffsets: [number, number][] = [
-  [0, 0], [.13, .02], [-.12, .05], [.16, -.12], [-.16, -.12], [.28, .1],
-  [-.28, .12], [.24, -.24], [-.24, -.22], [0, .28], [0, -.3], [.36, -.05],
-]
-
-function projectPoint(project: Project, digitalIndex: number, geographicIndex: number): [number, number] {
+function projectPoint(project: Project, digitalIndex: number): [number, number] {
   if (project.coordinates) {
     const [lon, lat] = project.coordinates
-    const [offsetX, offsetY] = geographicOffsets[geographicIndex % geographicOffsets.length]
+    const [offsetX, offsetY] = project.mapOffset ?? [0, 0]
     return [(lon - 13) * 0.32 + offsetX, (lat - 64.5) * 0.55 + offsetY]
   }
   return digitalPositions[digitalIndex % digitalPositions.length]
@@ -114,8 +109,8 @@ function DigitalIsland() {
   )
 }
 
-function Marker({ project, digitalIndex, geographicIndex, active, onActive, onOpen }: { project: Project; digitalIndex: number; geographicIndex: number; active: boolean; onActive: () => void; onOpen: () => void }) {
-  const [x, y] = projectPoint(project, digitalIndex, geographicIndex)
+function Marker({ project, digitalIndex, active, onActive, onOpen }: { project: Project; digitalIndex: number; active: boolean; onActive: () => void; onOpen: () => void }) {
+  const [x, y] = projectPoint(project, digitalIndex)
   return (
     <group position={[x, y, .52]}>
       <mesh
@@ -154,7 +149,6 @@ function MapScene({ projects, active, onActive, onOpen }: Props) {
             key={project.id}
             project={project}
             digitalIndex={projects.filter((item) => item.kind === 'digital').findIndex((item) => item.id === project.id)}
-            geographicIndex={projects.filter((item) => item.kind === 'geographic').findIndex((item) => item.id === project.id)}
             active={project.id === active}
             onActive={() => onActive(project.id)}
             onOpen={() => onOpen(project)}
@@ -194,7 +188,7 @@ export default function ProjectAtlas(props: Props) {
   }, [])
   const isCompact = viewportWidth <= 960
   const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
-  const mapZoom = isCompact ? Math.min(64, viewportWidth / 10.5) : Math.min(58, desktopMapWidth / 10.5)
+  const mapZoom = isCompact ? Math.min(58, viewportWidth / 11.5) : Math.min(58, desktopMapWidth / 10.5)
   const activeProject = props.projects.find((project) => project.id === props.active) ?? props.projects[0]
   return (
     <div className="three-atlas">

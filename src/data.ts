@@ -11,6 +11,7 @@ export type Project = {
   group: ProjectGroup
   kind: 'geographic' | 'digital'
   coordinates?: [number, number]
+  mapOffset?: [number, number]
   metric: string
   status: string
   link?: string

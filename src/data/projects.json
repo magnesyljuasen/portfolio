@@ -102,14 +102,13 @@
   {
     "id": "enova-vannbaren-varme",
     "title": "Vannbåren varme i norske bygg",
-    "eyebrow": "Nasjonal analyse",
+    "eyebrow": "Digitalt analyseprodukt",
     "description": "Analysemodell og rapport om kostnader og potensial for konvertering.",
     "longDescription": "Jeg utviklet analysemodellen og skrev store deler av rapporten for Enova om konvertering fra elektrisk til vannbåren varme i større bygg. Arbeidet kombinerte nasjonale bygningsdata, tekniske forutsetninger og kostnadsberegninger.",
     "year": "2025–26",
     "tags": ["Python", "Nasjonale data", "Vannbåren varme", "Rapport"],
-    "group": "analyse",
-    "kind": "geographic",
-    "coordinates": [10.4, 63.43],
+    "group": "produkt",
+    "kind": "digital",
     "metric": "13 TWh/år potensial",
     "status": "Publisert",
     "link": "https://enova.no/nb/bedrift/bygg-og-eiendom/nye-funn-om-kostnader-for-konvertering-til-vannbaren-varme-i-bygg"
@@ -139,6 +138,7 @@
     "group": "analyse",
     "kind": "geographic",
     "coordinates": [10.73, 59.96],
+    "mapOffset": [-0.08, 0.08],
     "metric": "36 bygg",
     "status": "Videreført til detaljprosjekt"
   },
@@ -194,6 +194,7 @@
     "group": "produkt",
     "kind": "geographic",
     "coordinates": [10.8, 59.81],
+    "mapOffset": [0.08, -0.08],
     "metric": "To fotballbaner",
     "status": "I drift"
   },
@@ -292,6 +293,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.84, 59.93],
+    "mapOffset": [0.08, 0],
     "metric": "Dybde til berg",
     "status": "Feltarbeid"
   },
@@ -306,6 +308,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.84, 59.72],
+    "mapOffset": [0.1, -0.12],
     "metric": "Kalksementstabilisering",
     "status": "Feltarbeid"
   },
@@ -320,6 +323,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.73, 60.02],
+    "mapOffset": [-0.04, 0.13],
     "metric": "Miljøprøver",
     "status": "Feltarbeid"
   },
@@ -334,6 +338,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.2, 59.74],
+    "mapOffset": [-0.1, -0.02],
     "metric": "Miljøprøver",
     "status": "Feltarbeid"
   },
@@ -348,6 +353,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.66, 59.43],
+    "mapOffset": [0, -0.08],
     "metric": "Miljøprøver",
     "status": "Feltarbeid"
   },
@@ -362,6 +368,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [11.16, 59.58],
+    "mapOffset": [0.12, -0.06],
     "metric": "Miljøprøver",
     "status": "Feltarbeid"
   },
@@ -376,6 +383,7 @@
     "group": "prosjektering",
     "kind": "geographic",
     "coordinates": [10.33, 60.07],
+    "mapOffset": [-0.1, 0.1],
     "metric": "Totalsondering",
     "status": "Feltarbeid"
   }
