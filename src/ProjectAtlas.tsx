@@ -130,10 +130,6 @@ function Marker({ project, digitalIndex, geographicIndex, active, onActive, onOp
         <sphereGeometry args={[active ? .12 : .085, 20, 20]} />
         <meshBasicMaterial color={projectGroups[project.group].color} />
       </mesh>
-      <mesh position={[0, 0, -.02]}>
-        <ringGeometry args={[active ? .17 : .135, active ? .19 : .15, 32]} />
-        <meshBasicMaterial color="#283028" transparent opacity={active ? .8 : .35} side={THREE.DoubleSide} />
-      </mesh>
     </group>
   )
 }
@@ -210,7 +206,7 @@ export default function ProjectAtlas(props: Props) {
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
-        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? 2.2 : 0} />
+        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? -2 : 0} />
         <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>
