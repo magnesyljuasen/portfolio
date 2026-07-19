@@ -142,7 +142,7 @@ export default function App() {
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
             <div className="intro-copy">
-              <p className="intro-role">Sivilingeniør innen energi og digitale løsninger</p>
+              <p className="intro-role">Sivilingeniør | Data, analyse og digitale løsninger</p>
               <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
               <p className="intro-lead">Jeg kombinerer energifag, geodata og Python for å utvikle beslutningsverktøy som faktisk blir brukt.</p>
             </div>
