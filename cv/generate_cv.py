@@ -88,7 +88,7 @@ styles.add(ParagraphStyle(
     name="Meta",
     fontName="Arial",
     fontSize=8.2,
-    leading=11,
+    leading=13,
     textColor=MUTED,
     alignment=TA_RIGHT,
 ))
@@ -98,8 +98,12 @@ styles.add(ParagraphStyle(
     fontSize=8.8,
     leading=12.3,
     textColor=INK,
-    leftIndent=10,
-    firstLineIndent=-8,
+    leftIndent=11,
+    firstLineIndent=0,
+    bulletIndent=1,
+    bulletFontName="Arial",
+    bulletFontSize=7,
+    bulletColor=ACCENT,
     spaceAfter=2.7,
 ))
 styles.add(ParagraphStyle(
@@ -125,6 +129,20 @@ styles.add(ParagraphStyle(
     leading=9,
     textColor=colors.HexColor("#7A817A"),
 ))
+styles.add(ParagraphStyle(
+    name="RowLabel",
+    fontName="Arial-Bold",
+    fontSize=8.6,
+    leading=11.8,
+    textColor=INK,
+))
+styles.add(ParagraphStyle(
+    name="RowValue",
+    fontName="Arial",
+    fontSize=8.6,
+    leading=11.8,
+    textColor=INK,
+))
 
 
 def link(label: str, url: str) -> str:
@@ -144,17 +162,34 @@ def role_row(title: str, period: str):
         colWidths=[135 * mm, 39 * mm],
     )
     table.setStyle(TableStyle([
-        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ("TOPPADDING", (0, 0), (-1, -1), 0),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
     ]))
+    table.hAlign = "LEFT"
     return table
 
 
 def bullet(text: str):
-    return Paragraph(f"- {text}", styles["BulletCV"])
+    return Paragraph(text, styles["BulletCV"], bulletText="•")
+
+
+def aligned_rows(rows: list[tuple[str, str]]):
+    table = Table(
+        [[Paragraph(label, styles["RowLabel"]), Paragraph(value, styles["RowValue"])] for label, value in rows],
+        colWidths=[39 * mm, 135 * mm],
+    )
+    table.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ("TOPPADDING", (0, 0), (-1, -1), 0),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.2),
+    ]))
+    table.hAlign = "LEFT"
+    return table
 
 
 def project(title: str, description: str, keywords: str, url: str | None = None):
@@ -229,6 +264,7 @@ story.append(Spacer(1, 4))
 story.append(role_row("Sommervikar | If Skadeforsikring", "2016, 2018 og 2019"))
 story.append(bullet("Arbeidet med forbedringer i interne datasystemer og operative arbeidsprosesser."))
 
+story.append(PageBreak())
 story += section("Utvalgte resultater")
 story.append(project(
     "AV Energiplanlegging",
@@ -243,9 +279,6 @@ story.append(project(
     "https://www.varmepumpeinfo.no/bergvarme/kalkulator",
 ))
 
-story.append(PageBreak())
-
-story += section("Utvalgte resultater - fortsetter")
 story.append(project(
     "Energimål for bygg i Oslo",
     "Utviklet analysemodellen bak en utredning av Oslos energimål etter 2030. Modellen beregnet et teknisk effektiviseringspotensial på 4,78 TWh og sammenlignet kostnader og konsekvenser ved tre ambisjonsnivåer.",
@@ -273,12 +306,11 @@ story.append(role_row("Master i teknologi (sivilingeniør), tekniske geofag | NT
 story.append(Paragraph("Fordypning i ingeniørgeologi og bergmekanikk.", styles["Small"]))
 
 story += section("Teknologi og verktøy")
-story.append(Paragraph(
-    "<b>Programmering og data:</b> Python, Streamlit, pandas, dataanalyse, tidsserier, HTML, CSS, Git, Azure<br/>"
-    "<b>Geo og prosjektering:</b> GIS/ArcGIS, AutoCAD, energimodellering, bergvarme og grunnvarme<br/>"
-    "<b>Arbeidsform:</b> KI-assistert utvikling, produktutvikling, automatisering, visualisering og teknisk rapportering",
-    styles["BodyCV"],
-))
+story.append(aligned_rows([
+    ("Programmering og data", "Python, Streamlit, pandas, dataanalyse, tidsserier, HTML, CSS, Git, Azure"),
+    ("Geo og prosjektering", "GIS/ArcGIS, AutoCAD, energimodellering, bergvarme og grunnvarme"),
+    ("Arbeidsform", "KI-assistert utvikling, produktutvikling, automatisering, visualisering og teknisk rapportering"),
+]))
 
 story += section("Faglig bidrag og ledelse")
 story.append(bullet("Medforfatter av konferanseartikkel om termomekaniske egenskaper i norsk kvikkleire, innsendt til ICSMGE 2022."))
