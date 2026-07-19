@@ -151,13 +151,6 @@ export default function App() {
           </article>
 
           <section className="project-explorer" id="projects" aria-label="Prosjektutforsker">
-            <header className="explorer-header">
-              <span className="map-hint">
-                <span className="hint-desktop">hold over en prikk<br />fra feltarbeid til digitale produkter</span>
-                <span className="hint-touch">trykk på en prikk<br />fra feltarbeid til digitale produkter</span>
-              </span>
-            </header>
-
             <div className="explorer-body">
               <Suspense fallback={<div className="map-loading"><span>tegner kartet...</span></div>}>
                 <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} onReady={() => undefined} />
