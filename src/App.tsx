@@ -68,7 +68,6 @@ export default function App() {
   const [loaderExiting, setLoaderExiting] = useState(false)
   const [pageReady, setPageReady] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [archiveOpen, setArchiveOpen] = useState(false)
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const loaderStartedAt = useRef(performance.now())
@@ -194,7 +193,10 @@ export default function App() {
 
           <section className="project-explorer" id="projects" aria-label="Prosjektutforsker">
             <header className="explorer-header">
-              <span className="map-hint"><span className="hint-desktop">hold over en prikk for å se prosjekt</span><span className="hint-touch">trykk på en prikk</span></span>
+              <span className="map-hint">
+                <span className="hint-desktop">hold over en prikk<br />fra feltarbeid til digitale produkter</span>
+                <span className="hint-touch">trykk på en prikk<br />fra feltarbeid til digitale produkter</span>
+              </span>
               <div className="map-legend" aria-label="Prikkfarger">
                 {Object.entries(projectGroups).map(([key, group]) => (
                   <span key={key}><i style={{ backgroundColor: group.color }} />{group.label}</span>
@@ -215,7 +217,7 @@ export default function App() {
         <header className="selected-projects-heading">
           <span className="scribble">noen resultater</span>
           <h2 id="selected-projects-title">Fra faglig problem til <span>løsning i bruk.</span></h2>
-          <p>Et utvalg prosjekter der jeg har kombinert analyse, energi og utvikling.</p>
+          <p>Et lite utvalg av resultater. Kartet over viser bredden i det jeg har jobbet med, fra praktiske grunnundersøkelser til analyser og digitale produkter.</p>
         </header>
         <div className="featured-project-list">
           {featuredProjects.map((project) => (
@@ -227,21 +229,6 @@ export default function App() {
               <ArrowUpRight size={18} aria-hidden="true" />
             </button>
           ))}
-        </div>
-        <div className={`project-archive ${archiveOpen ? 'is-open' : ''}`}>
-          <button className="archive-summary" type="button" aria-label={`Se hele prosjektarkivet, ${projects.length} prosjekter`} aria-expanded={archiveOpen} aria-controls="project-archive-list" onClick={() => setArchiveOpen((open) => !open)}>
-            Se hele prosjektarkivet <span>{projects.length}</span>
-          </button>
-          <div className="project-archive-list" id="project-archive-list" hidden={!archiveOpen}>
-            {projects.map((project) => (
-              <button type="button" key={project.id} onClick={() => setSelectedProject(project)}>
-                <span>{projectGroups[project.group].label}</span>
-                <strong>{project.title}</strong>
-                <small>{project.metric}</small>
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 

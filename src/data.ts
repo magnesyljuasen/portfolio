@@ -24,7 +24,7 @@ export type ProjectGroup = 'analyse' | 'produkt' | 'prosjektering'
 export const projectGroups: Record<ProjectGroup, { label: string; color: string }> = {
   analyse: { label: 'analyse', color: '#355744' },
   produkt: { label: 'digitalt produkt', color: '#a84f37' },
-  prosjektering: { label: 'prosjektering', color: '#b68a3c' },
+  prosjektering: { label: 'felt og prosjektering', color: '#b68a3c' },
 }
 
 export const projects = projectData as unknown as Project[]
