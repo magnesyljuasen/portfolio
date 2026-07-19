@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, Mail, Menu, X } from 'lucide-react'
-import { projectGroups, projects, type Project } from './data'
+import { projects, type Project } from './data'
 
 const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 
@@ -98,47 +98,6 @@ export default function App() {
   }, [isLoading, pageReady])
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const root = document.documentElement
-    let frame = 0
-    const updateParallax = () => {
-      frame = 0
-      const viewportHeight = window.innerHeight
-      const heroProgress = Math.min(Math.max(window.scrollY / viewportHeight, 0), 1)
-      root.style.setProperty('--hero-copy-y', `${heroProgress * -48}px`)
-      root.style.setProperty('--hero-map-y', `${heroProgress * 24}px`)
-
-      const about = document.querySelector<HTMLElement>('.about-screen')
-      if (about) {
-        const rect = about.getBoundingClientRect()
-        const progress = Math.min(Math.max((viewportHeight - rect.top) / (viewportHeight + rect.height), 0), 1) - .5
-        const range = window.innerWidth <= 960 ? 18 : 42
-        root.style.setProperty('--about-photo-y', `${progress * -range}px`)
-        root.style.setProperty('--about-content-y', `${progress * range * .62}px`)
-      }
-
-      const footer = document.querySelector<HTMLElement>('.site-footer')
-      if (footer) {
-        const rect = footer.getBoundingClientRect()
-        const progress = Math.min(Math.max((viewportHeight - rect.top) / (viewportHeight + rect.height), 0), 1) - .5
-        root.style.setProperty('--footer-y', `${progress * -28}px`)
-      }
-    }
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateParallax)
-    }
-    updateParallax()
-    window.addEventListener('scroll', requestUpdate, { passive: true })
-    window.addEventListener('resize', requestUpdate)
-    return () => {
-      window.removeEventListener('scroll', requestUpdate)
-      window.removeEventListener('resize', requestUpdate)
-      window.cancelAnimationFrame(frame)
-      ;['--hero-copy-y', '--hero-map-y', '--about-photo-y', '--about-content-y', '--footer-y'].forEach((name) => root.style.removeProperty(name))
-    }
-  }, [])
-
-  useEffect(() => {
     const handleKey = (event: KeyboardEvent) => event.key === 'Escape' && setMobileMenuOpen(false)
     const handleResize = () => window.innerWidth > 960 && setMobileMenuOpen(false)
     window.addEventListener('keydown', handleKey)
@@ -184,7 +143,7 @@ export default function App() {
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
             <div className="intro-copy">
-              <p className="intro-role">Sivilingeniør · energi · digitale løsninger</p>
+              <p className="intro-role">Sivilingeniør innen energi og digitale løsninger</p>
               <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
               <p className="intro-lead">Jeg kombinerer energifag, geodata og Python for å utvikle beslutningsverktøy som faktisk blir brukt.</p>
             </div>
@@ -197,11 +156,6 @@ export default function App() {
                 <span className="hint-desktop">hold over en prikk<br />fra feltarbeid til digitale produkter</span>
                 <span className="hint-touch">trykk på en prikk<br />fra feltarbeid til digitale produkter</span>
               </span>
-              <div className="map-legend" aria-label="Prikkfarger">
-                {Object.entries(projectGroups).map(([key, group]) => (
-                  <span key={key}><i style={{ backgroundColor: group.color }} />{group.label}</span>
-                ))}
-              </div>
             </header>
 
             <div className="explorer-body">
@@ -225,7 +179,6 @@ export default function App() {
               <span className="featured-project-type">{project.eyebrow}</span>
               <strong>{project.title}</strong>
               <span className="featured-project-description">{project.description}</span>
-              <span className="featured-project-result">{project.metric}</span>
               <ArrowUpRight size={18} aria-hidden="true" />
             </button>
           ))}

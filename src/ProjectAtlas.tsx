@@ -193,7 +193,7 @@ export default function ProjectAtlas(props: Props) {
   const isCompact = viewportWidth <= 960
   const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
   const mapHeight = isCompact
-    ? Math.min(570, Math.max(500, viewportHeight * .65))
+    ? Math.max(500, viewportHeight - 58)
     : Math.max(360, viewportHeight - 68)
   const mapZoom = isCompact
     ? Math.min(58, viewportWidth / 11.5, mapHeight / 8.1)
