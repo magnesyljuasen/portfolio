@@ -145,8 +145,8 @@ styles.add(ParagraphStyle(
 ))
 
 
-def link(label: str, url: str) -> str:
-    return f'<a href="{url}" color="#59645C">{label}</a>'
+def link(label: str, url: str, color: str = "#59645C") -> str:
+    return f'<a href="{url}" color="{color}">{label}</a>'
 
 
 def section(title: str):
@@ -193,7 +193,7 @@ def aligned_rows(rows: list[tuple[str, str]]):
 
 
 def project(title: str, description: str, keywords: str, url: str | None = None):
-    heading = link(title, url) if url else title
+    heading = link(title, url, "#263129") if url else title
     return KeepTogether([
         Paragraph(heading, styles["ProjectTitle"]),
         Paragraph(description, styles["Small"]),
