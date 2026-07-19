@@ -17,12 +17,12 @@ export type Project = {
   image?: string
 }
 
-export type ProjectGroup = 'fag' | 'verktoy' | 'lek'
+export type ProjectGroup = 'analyse' | 'produkt' | 'prosjektering'
 
 export const projectGroups: Record<ProjectGroup, { label: string; color: string }> = {
-  fag: { label: 'fag', color: '#355744' },
-  verktoy: { label: 'verktøy', color: '#a84f37' },
-  lek: { label: 'lek', color: '#b68a3c' },
+  analyse: { label: 'analyse', color: '#355744' },
+  produkt: { label: 'digitalt produkt', color: '#a84f37' },
+  prosjektering: { label: 'prosjektering', color: '#b68a3c' },
 }
 
 export const projects = projectData as unknown as Project[]

@@ -36,6 +36,7 @@ button { cursor: pointer; }
 .external-links { display: flex; align-items: center; gap: 6px; }
 .external-links a, .external-links button { height: 32px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 8px; border: 0; border-radius: 0; background: transparent; font-size: 10px; font-weight: 500; transition: color .18s, transform .18s; }
 .external-links a { width: 32px; padding: 0; }
+.external-links .cv-link { width:auto;padding:0 8px;white-space:nowrap; }
 .external-links a:hover { color: var(--accent); transform: translateY(-2px); }
 .external-links button:disabled { opacity: .38; cursor: not-allowed; }
 
@@ -106,11 +107,14 @@ button { cursor: pointer; }
 .detail-image { width: 100%; max-height: 250px; margin-bottom: 24px; display: block; object-fit: cover; background: #e4ded2; }
 .detail-meta { margin-top: 20px !important; color: #263129 !important; font-family:'IBM Plex Mono',monospace; font-size: 8px !important; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
 .detail-tags { margin-top: 15px; }
+.detail-link { width:max-content;margin-top:24px;display:inline-flex;align-items:center;gap:7px;padding-bottom:5px;border-bottom:1px solid #b9b1a4;color:var(--ink);font-size:11px;font-weight:600; }
+.detail-link svg { color:var(--accent);transition:transform .18s; }
+.detail-link:hover svg { transform:translate(3px,-3px); }
 
 @media(max-width:960px){
   html { scroll-snap-type: none; }
   .landing-screen { height: auto; min-height: 100svh; padding-top: 58px; display: block; }
-  .topbar { position:fixed;z-index:12;inset:0 0 auto;height:58px;padding:0 14px;background:rgba(244,240,231,.78);backdrop-filter:blur(10px) }.identity{font-size:15px}.top-actions{gap:10px}.external-links{gap:2px}.external-links a,.external-links button{height:29px}.external-links a{width:27px}.external-links button{padding:0 5px}.external-links button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  .topbar { position:fixed;z-index:12;inset:0 0 auto;height:58px;padding:0 14px;background:rgba(244,240,231,.78);backdrop-filter:blur(10px) }.identity{font-size:15px}.top-actions{gap:10px}.external-links{gap:2px}.external-links a,.external-links button{height:29px}.external-links a{width:27px}.external-links button{padding:0 5px}.external-links .cv-link{width:27px;padding:0}.external-links .cv-link span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
   .home-layout { height:auto;min-height:0;display:block }.intro-panel { min-height: 520px; padding: 25px 21px 25px; scroll-snap-align:start;scroll-margin-top:58px }.intro-copy{margin-top:60px}.intro-copy h1{font-size:clamp(42px,13vw,50px)}.intro-lead{margin-top:24px;font-size:13px}
   .project-explorer { min-height:690px;scroll-margin-top:58px }.explorer-header{top:190px;gap:8px;padding:0 14px}.map-hint{font-size:14px;line-height:1}.hint-desktop{display:none}.hint-touch{display:inline}.map-legend{gap:8px;font-size:7px}.map-legend span{gap:4px}.map-legend i{width:5px;height:5px}
   .intro-copy,.three-atlas{transform:none}.three-atlas{min-height:642px}.fixed-map-card{right:20px;bottom:24px;min-width:150px}.fixed-map-card strong{font-size:12px}
@@ -118,6 +122,6 @@ button { cursor: pointer; }
   .site-footer{min-height:570px;padding:55px 22px 25px;display:flex;flex-direction:column;gap:45px;scroll-margin-top:58px}.footer-cta{margin:auto 0}.footer-cta h2{font-size:clamp(38px,11vw,50px)}.footer-meta{margin-top:auto;flex-direction:column;gap:10px}
   .detail-panel{max-height:92vh;grid-template-rows:42px auto;border-radius:14px}.detail-header{grid-column:1}.detail-copy{padding:26px 22px}.detail-copy h2{font-size:32px}.detail-copy>p:not(.kicker){font-size:13px}
 }
-@media(max-width:640px){.external-links .cv-link{display:none}.topbar{padding:0 12px}.identity{font-size:14px}.top-actions{gap:10px}.site-nav{gap:9px}.site-nav a{font-size:9px}.external-links{gap:0}.external-links a{width:25px}}
+@media(max-width:640px){.topbar{padding:0 12px}.identity{font-size:14px}.top-actions{gap:8px}.site-nav{gap:8px}.site-nav a{font-size:8px}.external-links{gap:0}.external-links a,.external-links .cv-link{width:24px}}
 @media(max-height:700px) and (min-width:961px){.intro-copy{margin-top:45px}.intro-copy h1{font-size:58px}.intro-lead{margin-top:18px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.portfolio-shell.is-loading .landing-screen{transform:none;filter:none}.about-photo,.about-content,.footer-cta{transform:none!important}}

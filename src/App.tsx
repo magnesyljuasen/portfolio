@@ -37,6 +37,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
           <p>{project.longDescription}</p>
           <p className="detail-meta">{project.status} · {project.metric}</p>
           <div className="detail-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+          {project.link && <a className="detail-link" href={project.link} target="_blank" rel="noreferrer">Se prosjektet <ArrowUpRight size={16} /></a>}
         </div>
       </article>
     </div>
@@ -132,7 +133,7 @@ export default function App() {
           <nav className="external-links" aria-label="Eksterne lenker">
             <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
             <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
-            <button className="cv-link" disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
+            <a className="cv-link" href={`${import.meta.env.BASE_URL}cv/magne-syljuasen-cv.pdf`} download><span>Last ned CV</span><ArrowDownToLine size={14} /></a>
           </nav>
         </div>
       </header>
