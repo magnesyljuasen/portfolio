@@ -180,15 +180,25 @@ function ResponsiveCamera({ zoom, offsetY = 0 }: { zoom: number; offsetY?: numbe
 }
 
 export default function ProjectAtlas(props: Props) {
-  const [viewportWidth, setViewportWidth] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 1280)
+  const [viewportSize, setViewportSize] = useState(() => ({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    height: typeof window !== 'undefined' ? window.innerHeight : 800,
+  }))
   useEffect(() => {
-    const updateWidth = () => setViewportWidth(window.innerWidth)
-    window.addEventListener('resize', updateWidth)
-    return () => window.removeEventListener('resize', updateWidth)
+    const updateSize = () => setViewportSize({ width: window.innerWidth, height: window.innerHeight })
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
   }, [])
+  const { width: viewportWidth, height: viewportHeight } = viewportSize
   const isCompact = viewportWidth <= 960
   const desktopMapWidth = viewportWidth - Math.max(380, viewportWidth * .37)
-  const mapZoom = isCompact ? Math.min(58, viewportWidth / 11.5) : Math.min(58, desktopMapWidth / 10.5)
+  const mapHeight = isCompact
+    ? Math.min(570, Math.max(500, viewportHeight * .65))
+    : Math.max(360, viewportHeight - 68)
+  const mapZoom = isCompact
+    ? Math.min(58, viewportWidth / 11.5, mapHeight / 8.1)
+    : Math.min(58, desktopMapWidth / 10.5, mapHeight / 8.1)
+  const compactOffsetY = Math.min(.25, -2 + (viewportWidth - 375) / 180)
   const activeProject = props.projects.find((project) => project.id === props.active) ?? props.projects[0]
   return (
     <div className="three-atlas">
@@ -200,7 +210,7 @@ export default function ProjectAtlas(props: Props) {
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
-        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? -2 : 0} />
+        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? compactOffsetY : 0} />
         <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>
