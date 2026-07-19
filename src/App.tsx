@@ -10,10 +10,7 @@ const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 function SiteLoader() {
   return (
     <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
-      <div className="loader-copy">
-        <strong>Magne Syljuåsen</strong>
-      </div>
-      <span className="eyes-loader" aria-hidden="true" />
+      <div className="arcade-loader" aria-hidden="true">Magne Syljuåsen</div>
     </div>
   )
 }
