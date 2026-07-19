@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --paper: #f4f0e7; --paper-deep: #ebe5d9; --ink: #263129; --accent: #173b63; --accent-light: #a9bfd4; --footer: #172b42; font-family: 'Montserrat', sans-serif; color: var(--ink); background: var(--paper); font-synthesis: none; }
+:root { --paper: #f4f0e7; --paper-deep: #ebe5d9; --ink: #263129; --accent: #9b4d38; --accent-light: #d47a5e; --footer: #26322b; font-family: 'Montserrat', sans-serif; color: var(--ink); background: var(--paper); font-synthesis: none; }
 * { box-sizing: border-box; }
 html, body, #root { width: 100%; min-height: 100%; margin: 0; }
 html { scroll-behavior: smooth; scroll-snap-type: y proximity; }

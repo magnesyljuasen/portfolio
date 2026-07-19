@@ -21,7 +21,7 @@ export type ProjectGroup = 'fag' | 'verktoy' | 'lek'
 
 export const projectGroups: Record<ProjectGroup, { label: string; color: string }> = {
   fag: { label: 'fag', color: '#355744' },
-  verktoy: { label: 'verktøy', color: '#173b63' },
+  verktoy: { label: 'verktøy', color: '#a84f37' },
   lek: { label: 'lek', color: '#b68a3c' },
 }
 
