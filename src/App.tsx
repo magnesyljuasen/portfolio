@@ -10,14 +10,6 @@ const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 function RoseLoader() {
   const groupRef = useRef<SVGGElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
-  const [countdown, setCountdown] = useState(5)
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setCountdown((value) => Math.max(1, value - 1))
-    }, 840)
-    return () => window.clearInterval(interval)
-  }, [])
 
   useEffect(() => {
     const group = groupRef.current
@@ -76,16 +68,15 @@ function RoseLoader() {
             {Array.from({ length: 78 }, (_, index) => <circle key={index} fill="currentColor" />)}
           </g>
         </svg>
-        <span className="rose-count">{countdown}</span>
       </div>
       <strong>Magne Syljuåsen</strong>
     </div>
   )
 }
 
-function SiteLoader() {
+function SiteLoader({ exiting }: { exiting: boolean }) {
   return (
-    <div className="site-loader" role="status" aria-label="Laster portfoliosiden">
+    <div className={`site-loader ${exiting ? 'is-exiting' : ''}`} role="status" aria-label="Laster portfoliosiden">
       <RoseLoader />
     </div>
   )
@@ -120,6 +111,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [loaderExiting, setLoaderExiting] = useState(false)
   const [pageReady, setPageReady] = useState(false)
   const [mapReady, setMapReady] = useState(false)
   const [activeId, setActiveId] = useState(projects[0].id)
@@ -127,24 +119,74 @@ export default function App() {
   const loaderStartedAt = useRef(performance.now())
 
   useEffect(() => {
+    if (!isLoading) return
     const handlePageReady = () => setPageReady(true)
     if (document.readyState === 'complete') handlePageReady()
     else window.addEventListener('load', handlePageReady, { once: true })
-    const fallback = window.setTimeout(() => setIsLoading(false), 10000)
-    return () => { window.removeEventListener('load', handlePageReady); window.clearTimeout(fallback) }
-  }, [])
+    let finish = 0
+    const fallback = window.setTimeout(() => {
+      setLoaderExiting(true)
+      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 1150)
+    }, 10000)
+    return () => { window.removeEventListener('load', handlePageReady); window.clearTimeout(fallback); window.clearTimeout(finish) }
+  }, [isLoading])
 
   useEffect(() => {
     if (!pageReady || !mapReady) return
     const minimumDuration = 4200
     const remaining = Math.max(0, minimumDuration - (performance.now() - loaderStartedAt.current))
-    const timer = window.setTimeout(() => setIsLoading(false), remaining)
-    return () => window.clearTimeout(timer)
+    let finish = 0
+    const timer = window.setTimeout(() => {
+      setLoaderExiting(true)
+      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 1150)
+    }, remaining)
+    return () => { window.clearTimeout(timer); window.clearTimeout(finish) }
   }, [pageReady, mapReady])
 
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const root = document.documentElement
+    let frame = 0
+    const updateParallax = () => {
+      frame = 0
+      const viewportHeight = window.innerHeight
+      const heroProgress = Math.min(Math.max(window.scrollY / viewportHeight, 0), 1)
+      root.style.setProperty('--hero-copy-y', `${heroProgress * -48}px`)
+      root.style.setProperty('--hero-map-y', `${heroProgress * 24}px`)
+
+      const about = document.querySelector<HTMLElement>('.about-screen')
+      if (about) {
+        const rect = about.getBoundingClientRect()
+        const progress = Math.min(Math.max((viewportHeight - rect.top) / (viewportHeight + rect.height), 0), 1) - .5
+        const range = window.innerWidth <= 960 ? 18 : 42
+        root.style.setProperty('--about-photo-y', `${progress * -range}px`)
+        root.style.setProperty('--about-content-y', `${progress * range * .62}px`)
+      }
+
+      const footer = document.querySelector<HTMLElement>('.site-footer')
+      if (footer) {
+        const rect = footer.getBoundingClientRect()
+        const progress = Math.min(Math.max((viewportHeight - rect.top) / (viewportHeight + rect.height), 0), 1) - .5
+        root.style.setProperty('--footer-y', `${progress * -28}px`)
+      }
+    }
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateParallax)
+    }
+    updateParallax()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    return () => {
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      window.cancelAnimationFrame(frame)
+      ;['--hero-copy-y', '--hero-map-y', '--about-photo-y', '--about-content-y', '--footer-y'].forEach((name) => root.style.removeProperty(name))
+    }
+  }, [])
+
   return (
-    <main className={`portfolio-shell ${isLoading ? 'is-loading' : ''} ${selectedProject ? 'detail-open' : ''}`}>
-      {isLoading && <SiteLoader />}
+    <main className={`portfolio-shell ${isLoading ? 'is-loading' : ''} ${loaderExiting ? 'loader-exiting' : ''} ${selectedProject ? 'detail-open' : ''}`}>
+      {isLoading && <SiteLoader exiting={loaderExiting} />}
       <div className="landing-screen">
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
