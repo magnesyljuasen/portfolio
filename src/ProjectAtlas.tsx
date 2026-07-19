@@ -123,11 +123,15 @@ function Marker({ project, digitalIndex, geographicIndex, active, onActive, onOp
         onPointerOut={() => { document.body.style.cursor = '' }}
         onClick={(event) => { event.stopPropagation(); onOpen() }}
       >
-        <sphereGeometry args={[active ? .16 : .12, 20, 20]} />
+        <sphereGeometry args={[.2, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[active ? .12 : .085, 20, 20]} />
         <meshBasicMaterial color={projectGroups[project.group].color} />
       </mesh>
       <mesh position={[0, 0, -.02]}>
-        <ringGeometry args={[active ? .23 : .19, active ? .25 : .205, 32]} />
+        <ringGeometry args={[active ? .17 : .135, active ? .19 : .15, 32]} />
         <meshBasicMaterial color="#283028" transparent opacity={active ? .8 : .35} side={THREE.DoubleSide} />
       </mesh>
     </group>
