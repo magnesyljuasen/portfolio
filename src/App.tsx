@@ -10,6 +10,14 @@ const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 function RoseLoader() {
   const groupRef = useRef<SVGGElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
+  const [countdown, setCountdown] = useState(5)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setCountdown((value) => Math.max(1, value - 1))
+    }, 840)
+    return () => window.clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     const group = groupRef.current
@@ -61,12 +69,15 @@ function RoseLoader() {
 
   return (
     <div className="rose-loader" aria-hidden="true">
-      <svg viewBox="0 0 100 100" fill="none">
-        <g ref={groupRef}>
-          <path ref={pathRef} className="rose-path" />
-          {Array.from({ length: 78 }, (_, index) => <circle key={index} fill="currentColor" />)}
-        </g>
-      </svg>
+      <div className="rose-frame">
+        <svg viewBox="0 0 100 100" fill="none">
+          <g ref={groupRef}>
+            <path ref={pathRef} className="rose-path" />
+            {Array.from({ length: 78 }, (_, index) => <circle key={index} fill="currentColor" />)}
+          </g>
+        </svg>
+        <span className="rose-count">{countdown}</span>
+      </div>
       <strong>Magne Syljuåsen</strong>
     </div>
   )
