@@ -99,7 +99,7 @@ function DigitalIsland() {
       </mesh>
       <lineSegments position={[0, 0, .29]}>
         <edgesGeometry args={[new THREE.ShapeGeometry(shape)]} />
-        <lineBasicMaterial color="#a4563f" transparent opacity={.8} />
+        <lineBasicMaterial color="#173b63" transparent opacity={.8} />
       </lineSegments>
       <Html position={[2.7, -.48, .46]} center className="island-label">
         <span>digitalt</span>

@@ -13,7 +13,7 @@ function SiteLoader() {
       <div className="loader-copy">
         <strong>Magne Syljuåsen</strong>
       </div>
-      <span className="loader-line" />
+      <span className="eyes-loader" aria-hidden="true" />
     </div>
   )
 }
@@ -76,7 +76,11 @@ export default function App() {
         <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
           <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
           <div className="top-actions">
-            <a className="about-link" href="#about">Om meg</a>
+            <nav className="site-nav" aria-label="På denne siden">
+              <a href="#projects">Prosjekter</a>
+              <a href="#about">Om meg</a>
+              <a href="#contact">Kontakt</a>
+            </nav>
             <nav className="external-links" aria-label="Eksterne lenker">
               <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
               <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
@@ -132,13 +136,10 @@ export default function App() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <div className="footer-note">
-          <span className="scribble">en liten fotnote</span>
-          <p>Jeg motiveres av problemer med litt motstand, der man må tenke nytt og kreativt.</p>
-        </div>
+      <footer className="site-footer" id="contact">
         <div className="footer-cta">
-          <a href={linkedinUrl} target="_blank" rel="noreferrer"><h2>Skal vi ta en <span>prat?</span></h2><ArrowUpRight size={30} /></a>
+          <h2>Trenger du hjelp til å finne essensen, gjøre noe enklere eller lage en <span>digital løsning?</span></h2>
+          <a href={linkedinUrl} target="_blank" rel="noreferrer">Skal vi ta en prat? <ArrowUpRight size={18} /></a>
         </div>
         <div className="footer-meta"><span>© 2026 Magne Syljuåsen</span></div>
       </footer>
