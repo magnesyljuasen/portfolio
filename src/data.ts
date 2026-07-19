@@ -14,6 +14,7 @@ export type Project = {
   mapOffset?: [number, number]
   metric: string
   status: string
+  context?: string
   link?: string
   image?: string
 }

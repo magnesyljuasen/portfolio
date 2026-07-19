@@ -1,11 +1,30 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, Menu, X } from 'lucide-react'
+import { ArrowDown, ArrowDownToLine, ArrowUpRight, Github, Linkedin, Mail, Menu, X } from 'lucide-react'
 import { projectGroups, projects, type Project } from './data'
 
 const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 
 const githubUrl = 'https://github.com/magnesyljuasen'
 const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
+const emailUrl = 'mailto:msylju@gmail.com'
+const featuredProjectIds = [
+  'av-energiplanlegging',
+  'bergvarmekalkulator',
+  'geotermos-kalkulator',
+  'oslo-energimal',
+  'kristiansand-energiplan',
+]
+const featuredProjects = featuredProjectIds
+  .map((id) => projects.find((project) => project.id === id))
+  .filter((project): project is Project => Boolean(project))
+
+function shouldShowLoader() {
+  try {
+    return sessionStorage.getItem('portfolio-intro-seen') !== 'true'
+  } catch {
+    return true
+  }
+}
 
 function SiteLoader({ exiting }: { exiting: boolean }) {
   return (
@@ -27,7 +46,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
     <div className="detail-backdrop" role="presentation" onMouseDown={onClose}>
       <article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
         <header className="detail-header">
-          <span>{project.year}</span>
+          <span>{project.context ? `${project.context} · ${project.year}` : project.year}</span>
           <button onClick={onClose} aria-label="Lukk prosjekt"><X size={18} /></button>
         </header>
         <div className="detail-copy">
@@ -45,11 +64,11 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(shouldShowLoader)
   const [loaderExiting, setLoaderExiting] = useState(false)
   const [pageReady, setPageReady] = useState(false)
-  const [mapReady, setMapReady] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [archiveOpen, setArchiveOpen] = useState(false)
   const [activeId, setActiveId] = useState(projects[0].id)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const loaderStartedAt = useRef(performance.now())
@@ -59,25 +78,25 @@ export default function App() {
     const handlePageReady = () => setPageReady(true)
     if (document.readyState === 'complete') handlePageReady()
     else window.addEventListener('load', handlePageReady, { once: true })
-    let finish = 0
-    const fallback = window.setTimeout(() => {
-      setLoaderExiting(true)
-      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 600)
-    }, 10000)
-    return () => { window.removeEventListener('load', handlePageReady); window.clearTimeout(fallback); window.clearTimeout(finish) }
+    const fallback = window.setTimeout(handlePageReady, 2500)
+    return () => { window.removeEventListener('load', handlePageReady); window.clearTimeout(fallback) }
   }, [isLoading])
 
   useEffect(() => {
-    if (!pageReady || !mapReady) return
-    const minimumDuration = 2600
+    if (!isLoading || !pageReady) return
+    const minimumDuration = 900
     const remaining = Math.max(0, minimumDuration - (performance.now() - loaderStartedAt.current))
     let finish = 0
     const timer = window.setTimeout(() => {
       setLoaderExiting(true)
-      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 600)
+      finish = window.setTimeout(() => {
+        setIsLoading(false)
+        setLoaderExiting(false)
+        try { sessionStorage.setItem('portfolio-intro-seen', 'true') } catch { /* Storage may be unavailable. */ }
+      }, 400)
     }, remaining)
     return () => { window.clearTimeout(timer); window.clearTimeout(finish) }
-  }, [pageReady, mapReady])
+  }, [isLoading, pageReady])
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -136,19 +155,22 @@ export default function App() {
       {isLoading && <SiteLoader exiting={loaderExiting} />}
       <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
         <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
-        <button
-          className="mobile-menu-toggle"
-          type="button"
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-navigation"
-          aria-label={mobileMenuOpen ? 'Lukk meny' : 'Åpne meny'}
-          onClick={() => setMobileMenuOpen((open) => !open)}
-        >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="mobile-header-actions">
+          <a className="mobile-cv-link" href={`${import.meta.env.BASE_URL}cv/magne-syljuasen-cv.pdf`} download>CV <ArrowDownToLine size={13} /></a>
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={mobileMenuOpen ? 'Lukk meny' : 'Åpne meny'}
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
         <div className={`top-actions ${mobileMenuOpen ? 'is-open' : ''}`} id="mobile-navigation">
           <nav className="site-nav" aria-label="På denne siden">
-            <a href="#projects" onClick={() => setMobileMenuOpen(false)}>Prosjekter</a>
+            <a href="#selected-projects" onClick={() => setMobileMenuOpen(false)}>Prosjekter</a>
             <a href="#about" onClick={() => setMobileMenuOpen(false)}>Om meg</a>
             <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Kontakt</a>
           </nav>
@@ -163,10 +185,11 @@ export default function App() {
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
             <div className="intro-copy">
+              <p className="intro-role">Sivilingeniør · energi · digitale løsninger</p>
               <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
-              <p className="intro-lead">Med nysgjerrighet, kode og et ganske stort behov for struktur.</p>
+              <p className="intro-lead">Jeg kombinerer energifag, geodata og Python for å utvikle beslutningsverktøy som faktisk blir brukt.</p>
             </div>
-            <button className="scroll-cue" type="button" onClick={() => document.querySelector(window.innerWidth <= 960 ? '#projects' : '#about')?.scrollIntoView({ behavior: 'smooth' })}>mer nedenfor <ArrowDown size={13} /></button>
+            <button className="scroll-cue" type="button" onClick={() => document.querySelector('#selected-projects')?.scrollIntoView({ behavior: 'smooth' })}>se prosjekter <ArrowDown size={13} /></button>
           </article>
 
           <section className="project-explorer" id="projects" aria-label="Prosjektutforsker">
@@ -181,12 +204,46 @@ export default function App() {
 
             <div className="explorer-body">
               <Suspense fallback={<div className="map-loading"><span>tegner kartet...</span></div>}>
-                <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} onReady={() => setMapReady(true)} />
+                <ProjectAtlas projects={projects} active={activeId} onActive={setActiveId} onOpen={setSelectedProject} onReady={() => undefined} />
               </Suspense>
             </div>
           </section>
         </section>
       </div>
+
+      <section className="selected-projects" id="selected-projects" aria-labelledby="selected-projects-title">
+        <header className="selected-projects-heading">
+          <span className="scribble">noen resultater</span>
+          <h2 id="selected-projects-title">Fra faglig problem til <span>løsning i bruk.</span></h2>
+          <p>Et utvalg prosjekter der jeg har kombinert analyse, energi og utvikling.</p>
+        </header>
+        <div className="featured-project-list">
+          {featuredProjects.map((project) => (
+            <button className="featured-project" type="button" key={project.id} onClick={() => setSelectedProject(project)}>
+              <span className="featured-project-type">{project.eyebrow}</span>
+              <strong>{project.title}</strong>
+              <span className="featured-project-description">{project.description}</span>
+              <span className="featured-project-result">{project.metric}</span>
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+        <div className={`project-archive ${archiveOpen ? 'is-open' : ''}`}>
+          <button className="archive-summary" type="button" aria-label={`Se hele prosjektarkivet, ${projects.length} prosjekter`} aria-expanded={archiveOpen} aria-controls="project-archive-list" onClick={() => setArchiveOpen((open) => !open)}>
+            Se hele prosjektarkivet <span>{projects.length}</span>
+          </button>
+          <div className="project-archive-list" id="project-archive-list" hidden={!archiveOpen}>
+            {projects.map((project) => (
+              <button type="button" key={project.id} onClick={() => setSelectedProject(project)}>
+                <span>{projectGroups[project.group].label}</span>
+                <strong>{project.title}</strong>
+                <small>{project.metric}</small>
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="about-screen" id="about" aria-labelledby="about-title">
         <figure className="about-photo">
@@ -198,18 +255,22 @@ export default function App() {
             <h2 id="about-title">Sivilingeniør og <span>utvikler.</span></h2>
           </div>
           <div className="about-copy">
-            <p>Jeg er 29 år og utdannet innen geofag fra NTNU. I dag jobber jeg i Asplan Viak, først og fremst med energi og bergvarme.</p>
-            <p>Jeg liker å kombinere fag, data og kode. Jeg har brukt Python i mange år og bruker nå KI aktivt i utviklingen.</p>
-            <p>Jeg er opptatt av å se helheten og av å få fag, data, kode og KI til å spille sammen. Kanskje er det ikke tilfeldig at jeg alltid har vært midtbanespiller på fotballbanen.</p>
-            <span className="about-note">fag + data + kode + KI</span>
+            <p>Jeg er utdannet sivilingeniør innen geofag fra NTNU og jobber i Asplan Viak med energi, bergvarme og digitale beslutningsverktøy.</p>
+            <p>Jeg kombinerer energifag og geodata med Python for å strukturere komplekse analyser og gjøre dem enklere å bruke. KI bruker jeg som et praktisk verktøy til å utforske konsepter, utvikle raskere og forbedre arbeidsflyter.</p>
+            <p>Jeg er opptatt av å se helheten og få ulike fag og mennesker til å spille sammen. Kanskje er det ikke tilfeldig at jeg alltid har vært midtbanespiller på fotballbanen.</p>
+            <span className="about-note">fra faglig problem til løsning i bruk</span>
           </div>
         </div>
       </section>
 
       <footer className="site-footer" id="contact">
         <div className="footer-cta">
-          <h2>Trenger du hjelp til å finne essensen, gjøre noe enklere eller lage en <span>digital løsning?</span></h2>
-          <a href={linkedinUrl} target="_blank" rel="noreferrer">Skal vi ta en prat? <ArrowUpRight size={18} /></a>
+          <h2>Har du et komplekst problem som burde vært <span>enklere?</span></h2>
+          <p>Jeg tar gjerne en prat om energi, data og digitale løsninger.</p>
+          <div className="footer-links">
+            <a href={emailUrl}>Send en e-post <Mail size={17} /></a>
+            <a href={linkedinUrl} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={17} /></a>
+          </div>
         </div>
         <div className="footer-meta"><span>© 2026 Magne Syljuåsen</span></div>
       </footer>

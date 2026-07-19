@@ -4,13 +4,14 @@
     "title": "AV Energiplanlegging",
     "eyebrow": "Digitalt beslutningsverktøy",
     "description": "Tidligfase energiplanlegging fra enkeltbygg til hele områder.",
-    "longDescription": "Jeg har vært sentral i å bygge opp et Python- og Streamlit-produkt som kombinerer bygningsdata, timeserier, kart og energiscenarioer. Løsningen gjør det mulig for rådgivere og kunder å sammenligne tiltak, kostnader, effektbehov og energiforsyning tidlig i planleggingen.",
+    "longDescription": "Jeg har bygget opp sentrale deler av et Python- og Streamlit-produkt som kombinerer bygningsdata, timeserier, kart og energiscenarioer. Løsningen gjør det mulig for rådgivere og kunder å sammenligne tiltak, kostnader, effektbehov og energiforsyning tidlig i planleggingen, og brukes nå i mer enn 20 kundeprosjekter.",
     "year": "2021–26",
     "tags": ["Python", "Streamlit", "GIS", "Energimodellering"],
     "group": "produkt",
     "kind": "digital",
     "metric": "20+ kundeprosjekter",
     "status": "I aktiv bruk",
+    "context": "Asplan Viak",
     "link": "https://www.asplanviak.no/kvartalet/nyheter/sparer-penger-og-miljo-med-av-energiplanlegging/"
   },
   {
@@ -18,13 +19,14 @@
     "title": "Bergvarmekalkulatoren",
     "eyebrow": "Fra idé til produkt",
     "description": "Gjør besparelse, lønnsomhet og miljøgevinst ved bergvarme forståelig.",
-    "longDescription": "Mitt første digitale produkt startet som et eget initiativ og ble utviklet til en brukervennlig kalkulator for boligeiere. Den beregner et tidlig estimat på dimensjonering, økonomi og miljøgevinst for bergvarme, og ble senere solgt til Norsk Varmepumpeforening.",
+    "longDescription": "Jeg tok initiativ til og utviklet en brukervennlig kalkulator som gir boligeiere et tidlig estimat på dimensjonering, økonomi og miljøgevinst for bergvarme. Produktet ble senere solgt til Norsk Varmepumpeforening og er publisert på Varmepumpeinfo.",
     "year": "2022–23",
     "tags": ["Python", "Produktutvikling", "Bergvarme"],
     "group": "produkt",
     "kind": "digital",
     "metric": "Solgt til Norsk Varmepumpeforening",
     "status": "Publisert",
+    "context": "Asplan Viak",
     "link": "https://www.varmepumpeinfo.no/bergvarme/kalkulator"
   },
   {
@@ -32,13 +34,14 @@
     "title": "GeoTermos-kalkulator",
     "eyebrow": "Kompleks modell, enkelt grensesnitt",
     "description": "Undersøker potensialet for sesonglagring av varme i berg.",
-    "longDescription": "Jeg bygget et Python- og Streamlit-produkt som samler komplekse termiske og økonomiske beregninger i et tilgjengelig scenarioverktøy. Kalkulatoren gjør det enklere å vurdere om en GeoTermos kan passe i et prosjekt, og løsningen ble solgt til Hafslund.",
+    "longDescription": "Jeg utviklet et Python- og Streamlit-produkt som samler komplekse termiske og økonomiske beregninger i et tilgjengelig scenarioverktøy. Kalkulatoren gjør det enklere å vurdere potensialet for en GeoTermos, og produktet ble solgt til Hafslund.",
     "year": "2023–24",
     "tags": ["Python", "Streamlit", "Geoenergi", "Simulering"],
     "group": "produkt",
     "kind": "digital",
     "metric": "Solgt til Hafslund",
     "status": "Publisert",
+    "context": "Asplan Viak",
     "link": "https://av-geotermos-kalkulator.azurewebsites.net/"
   },
   {
@@ -60,14 +63,15 @@
     "title": "Energiplan Kristiansand",
     "eyebrow": "Beslutningsgrunnlag",
     "description": "Innledende energiberegninger for kommunens bygningsportefølje.",
-    "longDescription": "Jeg bygget en dataløsning for innledende beregninger av 92 kommunale bygg. Analysen gjorde potensialet for energieffektivisering sammenlignbart på tvers av porteføljen og bidro til et konkret investeringsgrunnlag for ENØK-tiltak.",
+    "longDescription": "Jeg utviklet en dataløsning for innledende energiberegninger av 92 kommunale bygg. Analysen gjorde potensialet for energieffektivisering sammenlignbart på tvers av porteføljen og bidro til et konkret investeringsgrunnlag for ENØK-tiltak.",
     "year": "2024",
     "tags": ["Python", "Porteføljeanalyse", "ENØK"],
     "group": "analyse",
     "kind": "geographic",
     "coordinates": [7.99, 58.15],
     "metric": "92 bygg",
-    "status": "Investeringsgrunnlag"
+    "status": "Investeringsgrunnlag",
+    "context": "Kristiansand kommune"
   },
   {
     "id": "ny-by-ny-flyplass",
@@ -89,7 +93,7 @@
     "title": "Nytt energimål for Oslo",
     "eyebrow": "Analysemodell",
     "description": "Modellgrunnlag for Oslos energimål for bygg etter 2030.",
-    "longDescription": "Jeg utviklet analysemodellen bak utredningen av et nytt energimål for Oslos bygningsmasse. Modellen beregner teknisk potensial, kostnader og effekter av ulike ambisjonsnivåer for energieffektivisering fram mot 2040.",
+    "longDescription": "Jeg utviklet analysemodellen bak utredningen av et nytt energimål for Oslos bygningsmasse. Modellen beregner teknisk potensial, kostnader og effekter av ulike ambisjonsnivåer for energieffektivisering fram mot 2040, med et beregnet teknisk potensial på 4,78 TWh.",
     "year": "2025–26",
     "tags": ["Python", "Energisystem", "Kostnadsanalyse", "Bygningsdata"],
     "group": "analyse",
@@ -97,6 +101,7 @@
     "coordinates": [10.75, 59.91],
     "metric": "4,78 TWh teknisk potensial",
     "status": "Publisert",
+    "context": "Klimaetaten i Oslo",
     "link": "https://www.klimaoslo.no/rapport/hva-bor-det-nye-energimalet-for-bygg-i-oslo-vaere/"
   },
   {
