@@ -161,12 +161,13 @@ function ReadySignal({ onReady }: { onReady: () => void }) {
   return null
 }
 
-function ResponsiveCamera({ zoom }: { zoom: number }) {
+function ResponsiveCamera({ zoom, offsetY = 0 }: { zoom: number; offsetY?: number }) {
   const camera = useThree((state) => state.camera) as OrthographicCamera
   useEffect(() => {
     camera.zoom = zoom
+    camera.position.y = offsetY
     camera.updateProjectionMatrix()
-  }, [camera, zoom])
+  }, [camera, offsetY, zoom])
   return null
 }
 
@@ -191,7 +192,7 @@ export default function ProjectAtlas(props: Props) {
         gl={{ antialias: true, alpha: true }}
       >
         <MapScene {...props} />
-        <ResponsiveCamera zoom={mapZoom} />
+        <ResponsiveCamera zoom={mapZoom} offsetY={isCompact ? 1.55 : 0} />
         <ReadySignal onReady={props.onReady} />
       </Canvas>
       <button className="fixed-map-card" onClick={() => props.onOpen(activeProject)}>

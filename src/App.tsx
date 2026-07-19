@@ -7,77 +7,11 @@ const ProjectAtlas = lazy(() => import('./ProjectAtlas'))
 const githubUrl = 'https://github.com/magnesyljuasen'
 const linkedinUrl = 'https://no.linkedin.com/in/magne-sylju%C3%A5sen-35235738'
 
-function RoseLoader() {
-  const groupRef = useRef<SVGGElement>(null)
-  const pathRef = useRef<SVGPathElement>(null)
-
-  useEffect(() => {
-    const group = groupRef.current
-    const path = pathRef.current
-    if (!group || !path) return
-
-    const particles = Array.from(group.querySelectorAll('circle'))
-    const particleCount = particles.length
-    const duration = 5400
-    const trailSpan = .32
-    const point = (progress: number, detailScale: number) => {
-      const t = progress * Math.PI * 2
-      const r = (9.2 + detailScale * .6) * (.72 + detailScale * .28) * Math.cos(5 * t)
-      return { x: 50 + Math.cos(t) * r * 3.25, y: 50 + Math.sin(t) * r * 3.25 }
-    }
-    const draw = (time: number) => {
-      const progress = (time % duration) / duration
-      const pulseAngle = ((time % 4600) / 4600) * Math.PI * 2
-      const detailScale = .52 + ((Math.sin(pulseAngle + .55) + 1) / 2) * .48
-      const pathData = Array.from({ length: 321 }, (_, index) => {
-        const position = point(index / 320, detailScale)
-        return `${index === 0 ? 'M' : 'L'} ${position.x.toFixed(2)} ${position.y.toFixed(2)}`
-      }).join(' ')
-      path.setAttribute('d', pathData)
-      group.setAttribute('transform', `rotate(${-((time % 28000) / 28000) * 360} 50 50)`)
-      particles.forEach((particle, index) => {
-        const tailOffset = index / (particleCount - 1)
-        const normalized = ((progress - tailOffset * trailSpan) % 1 + 1) % 1
-        const position = point(normalized, detailScale)
-        const fade = Math.pow(1 - tailOffset, .56)
-        particle.setAttribute('cx', position.x.toFixed(2))
-        particle.setAttribute('cy', position.y.toFixed(2))
-        particle.setAttribute('r', (.9 + fade * 2.7).toFixed(2))
-        particle.setAttribute('opacity', (.04 + fade * .96).toFixed(3))
-      })
-    }
-
-    const startedAt = performance.now()
-    let frame = 0
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const render = (now: number) => {
-      draw(now - startedAt)
-      frame = window.requestAnimationFrame(render)
-    }
-    if (reducedMotion) draw(1500)
-    else frame = window.requestAnimationFrame(render)
-    return () => window.cancelAnimationFrame(frame)
-  }, [])
-
-  return (
-    <div className="rose-loader" aria-hidden="true">
-      <div className="rose-frame">
-        <svg viewBox="0 0 100 100" fill="none">
-          <g ref={groupRef}>
-            <path ref={pathRef} className="rose-path" />
-            {Array.from({ length: 78 }, (_, index) => <circle key={index} fill="currentColor" />)}
-          </g>
-        </svg>
-      </div>
-      <strong>Magne Syljuåsen</strong>
-    </div>
-  )
-}
-
 function SiteLoader({ exiting }: { exiting: boolean }) {
   return (
     <div className={`site-loader ${exiting ? 'is-exiting' : ''}`} role="status" aria-label="Laster portfoliosiden">
-      <RoseLoader />
+      <strong>Magne Syljuåsen</strong>
+      <span className="loader-line" aria-hidden="true" />
     </div>
   )
 }
@@ -126,19 +60,19 @@ export default function App() {
     let finish = 0
     const fallback = window.setTimeout(() => {
       setLoaderExiting(true)
-      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 1150)
+      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 600)
     }, 10000)
     return () => { window.removeEventListener('load', handlePageReady); window.clearTimeout(fallback); window.clearTimeout(finish) }
   }, [isLoading])
 
   useEffect(() => {
     if (!pageReady || !mapReady) return
-    const minimumDuration = 4200
+    const minimumDuration = 2600
     const remaining = Math.max(0, minimumDuration - (performance.now() - loaderStartedAt.current))
     let finish = 0
     const timer = window.setTimeout(() => {
       setLoaderExiting(true)
-      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 1150)
+      finish = window.setTimeout(() => { setIsLoading(false); setLoaderExiting(false) }, 600)
     }, remaining)
     return () => { window.clearTimeout(timer); window.clearTimeout(finish) }
   }, [pageReady, mapReady])
@@ -187,31 +121,29 @@ export default function App() {
   return (
     <main className={`portfolio-shell ${isLoading ? 'is-loading' : ''} ${loaderExiting ? 'loader-exiting' : ''} ${selectedProject ? 'detail-open' : ''}`}>
       {isLoading && <SiteLoader exiting={loaderExiting} />}
+      <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
+        <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
+        <div className="top-actions">
+          <nav className="site-nav" aria-label="På denne siden">
+            <a href="#projects">Prosjekter</a>
+            <a href="#about">Om meg</a>
+            <a href="#contact">Kontakt</a>
+          </nav>
+          <nav className="external-links" aria-label="Eksterne lenker">
+            <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
+            <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
+            <button className="cv-link" disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
+          </nav>
+        </div>
+      </header>
       <div className="landing-screen">
-        <header className="topbar" aria-hidden={selectedProject ? true : undefined}>
-          <a className="identity" href="./" aria-label="Magne Syljuåsen, forside">Magne Syljuåsen</a>
-          <div className="top-actions">
-            <nav className="site-nav" aria-label="På denne siden">
-              <a href="#projects">Prosjekter</a>
-              <a href="#about">Om meg</a>
-              <a href="#contact">Kontakt</a>
-            </nav>
-            <nav className="external-links" aria-label="Eksterne lenker">
-              <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><Linkedin size={15} /></a>
-              <a href={githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><Github size={15} /></a>
-              <button className="cv-link" disabled title="CV-fil kommer"><span>CV kommer</span><ArrowDownToLine size={14} /></button>
-            </nav>
-          </div>
-        </header>
-
         <section className="home-layout" aria-hidden={selectedProject ? true : undefined}>
           <article className="intro-panel">
             <div className="intro-copy">
               <h1>Jeg gjør komplekse valg <strong>enklere.</strong></h1>
               <p className="intro-lead">Med nysgjerrighet, kode og et ganske stort behov for struktur.</p>
-              <p className="intro-note">helst ting som faktisk blir brukt</p>
             </div>
-            <span className="scroll-cue" aria-hidden="true">mer nedenfor <ArrowDown size={13} /></span>
+            <button className="scroll-cue" type="button" onClick={() => document.querySelector(window.innerWidth <= 960 ? '#projects' : '#about')?.scrollIntoView({ behavior: 'smooth' })}>mer nedenfor <ArrowDown size={13} /></button>
           </article>
 
           <section className="project-explorer" id="projects" aria-label="Prosjektutforsker">
@@ -240,12 +172,12 @@ export default function App() {
         <div className="about-content">
           <div className="about-heading">
             <span className="scribble">kort fortalt</span>
-            <h2 id="about-title">Sivilingeniør med geofag i bunn og stadig mer <span>kode i verktøykassa.</span></h2>
+            <h2 id="about-title">Sivilingeniør og <span>utvikler.</span></h2>
           </div>
           <div className="about-copy">
             <p>Jeg er 29 år og utdannet innen geofag fra NTNU. I dag jobber jeg i Asplan Viak, først og fremst med energi og bergvarme.</p>
             <p>Jeg liker å kombinere fag, data og kode. Jeg har brukt Python i mange år og bruker nå KI aktivt i utviklingen.</p>
-            <p>Jeg er ikke supernerd på én enkelt ting. Jeg er opptatt av helheten og av å få fag, data, kode og KI til å spille sammen. Kanskje er det ikke tilfeldig at jeg alltid har vært midtbanespiller på fotballbanen.</p>
+            <p>Jeg er opptatt av å se helheten og av å få fag, data, kode og KI til å spille sammen. Kanskje er det ikke tilfeldig at jeg alltid har vært midtbanespiller på fotballbanen.</p>
             <span className="about-note">fag + data + kode + KI</span>
           </div>
         </div>
